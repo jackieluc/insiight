@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>InSiight</title>
+    <link rel="shortcut icon" type="image/png" href="<%= require('../../assets/logo.jpg') %>" />
+    <!-- Twitter Card data -->
+    <meta name="twitter:card" value="InSiight">
+    <meta name="Description" content="Transforming professor-student feedback interactions for a better educational experience."/>
+    <!-- Open Graph data -->
+    <meta property="og:title" content="InSiight" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://www.InSiight.ca" />
+    <meta property="og:image" content="<%= require('../../assets/logo.jpg') %>" />
+    <meta property="og:description" content="Transforming professor-student feedback interactions for a better educational experience." />
+    <!-- Mobile header color for Chrome, Firefox OS and Opera -->
+    <meta name="theme-color" content="#000000">
+    <!-- Mobile header color Windows Phone -->
+    <meta name="msapplication-navbutton-color" content="#000000">
+    <!-- Mobile header color for iOS Safari (supports black, black-translucent or default) -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700" rel="stylesheet">
+</head>
+<body>
+    <h1>Sign up or Log in!</h1>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-128850591-1"></script>
+<script>
+    if (document.location.hostname === 'insiight') {
+        console.log('ehre');
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-128850591-1');
+    }
+</script>
+</body>
+</html>

@@ -2,9 +2,22 @@ const path = require('path');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
+const fs = require('fs')
+
+// Store .html file names in src/ in an array
+const pages =
+  fs
+    .readdirSync(path.resolve(__dirname, 'src/pages'))
+    .filter(fileName => fileName.endsWith('.html'))
+
+console.log(pages);
+
 module.exports = {
     devtool: 'eval-cheap-module-source-map',
-    entry: './src/index.js',
+    entry: {
+        home: './src/index.js',
+        identity: './src/pages/identity/identity.js'
+    },
     devServer: {
         port: 8080,
         contentBase: path.join(__dirname, "dist")
@@ -69,6 +82,12 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: './index.html',
             inject: true
-        })
+        }),
+        new HtmlWebpackPlugin({
+            template: './src/pages/identity/identity.html',
+            inject: true,
+            chunks: ['identity'],
+            filename: './identity/index.html'
+        }),
     ]
 };

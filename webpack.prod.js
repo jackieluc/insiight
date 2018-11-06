@@ -10,7 +10,10 @@ const buildPath = path.resolve(__dirname, 'dist');
 
 module.exports = {
     devtool: 'source-map',
-    entry: './src/index.js',
+    entry: {
+        home: './src/index.js',
+        identity: './src/pages/identity/identity.js'
+    },
     output: {
         filename: '[name].[hash:20].js',
         path: buildPath
@@ -89,10 +92,16 @@ module.exports = {
             // Inject the js bundle at the end of the body of the given template
             inject: 'body',
         }),
+        new HtmlWebpackPlugin({
+            template: './src/pages/identity/identity.html',
+            inject: true,
+            chunks: ['identity'],
+            filename: './identity/index.html'
+        }),
         new CleanWebpackPlugin(buildPath),
         new FaviconsWebpackPlugin({
             // Your source logo
-            logo: './src/assets/icon.png',
+            logo: './src/assets/logo.jpg',
             // The prefix for all image files (might be a folder or a name)
             prefix: 'icons-[hash]/',
             // Generate a cache file with control hashes and
@@ -103,7 +112,7 @@ module.exports = {
             // favicon background color (see https://github.com/haydenbleasel/favicons#usage)
             background: '#fff',
             // favicon app title (see https://github.com/haydenbleasel/favicons#usage)
-            title: 'insiight}}',
+            title: 'InSiight',
 
             // which icons should be generated (see https://github.com/haydenbleasel/favicons#usage)
             icons: {

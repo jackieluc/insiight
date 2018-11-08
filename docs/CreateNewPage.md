@@ -24,10 +24,10 @@ This is not ideal to create new pages, but before we can optimize this, we can f
 * Append the following in `Plugins` array
 ```
 new HtmlWebpackPlugin({
-    template: './src/pages/about/about.html',
-    inject: true,
-    chunks: ['about'],
-    filename: './about/index.html'
+    template: './src/pages/about/about.html', # the src HTML file
+    inject: true,                             # inject into the HTML file
+    chunks: ['about'],                        # the javascript file
+    filename: './about/index.html'            # the final file path and file name
 }),
 
 ```

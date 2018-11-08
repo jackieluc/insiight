@@ -1,16 +1,13 @@
 const path = require('path');
-
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const fs = require('fs')
+// const fs = require('fs')
 
-// Store .html file names in src/ in an array
-const pages =
-  fs
-    .readdirSync(path.resolve(__dirname, 'src/pages'))
-    .filter(fileName => fileName.endsWith('.html'))
-
-console.log(pages);
+// // Store .html file names in src/ in an array
+// const pages =
+//   fs
+//     .readdirSync(path.resolve(__dirname, 'src/pages'))
+//     .filter(fileName => fileName.endsWith('.html'))
 
 module.exports = {
     devtool: 'eval-cheap-module-source-map',
@@ -81,7 +78,9 @@ module.exports = {
     plugins: [
         new HtmlWebpackPlugin({
             template: './index.html',
-            inject: true
+            inject: true,
+            chunks: ['home'],
+            filename: './index.html'
         }),
         new HtmlWebpackPlugin({
             template: './src/pages/identity/identity.html',

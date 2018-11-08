@@ -16,7 +16,7 @@ module.exports = {
         identity: './src/pages/identity/identity.js'
     },
     devServer: {
-        port: 8080,
+        port: 5000,
         contentBase: path.join(__dirname, "dist")
     },
     module: {

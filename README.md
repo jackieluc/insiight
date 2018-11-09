@@ -42,6 +42,7 @@ npm run preview
 ├── node_modules              # Folder where 3rd party libraries and dependencies are installed to
 ├── src                       # Source code
 │   ├── assets                # Image and font assets
+│   ├── components            # Reusable, shareable, HTML component partials
 │   ├── pages                 # Pages that exist in the website, with sub folders being the page names
 │   ├── styles                # CSS styles, written in Sass
 │   └── index.js              # Main Entry point for the website's home page

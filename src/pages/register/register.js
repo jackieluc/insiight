@@ -4,5 +4,5 @@ import '../../styles/index.scss';
 
 $('document').ready(() => {
     
-    $('h1').text('Identity Page');
+    $('h1').text('Register Page');
 });

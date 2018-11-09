@@ -13,7 +13,7 @@ module.exports = {
     devtool: 'eval-cheap-module-source-map',
     entry: {
         home: './src/index.js',
-        identity: './src/pages/identity/identity.js'
+        register: './src/pages/register/register.js'
     },
     devServer: {
         port: 5000,

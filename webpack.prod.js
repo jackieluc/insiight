@@ -12,7 +12,7 @@ module.exports = {
     devtool: 'source-map',
     entry: {
         home: './src/index.js',
-        identity: './src/pages/identity/identity.js'
+        register: './src/pages/register/register.js'
     },
     output: {
         filename: '[name].[hash:20].js',

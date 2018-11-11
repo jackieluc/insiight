@@ -27,9 +27,6 @@ module.exports = {
                 loader: 'html-loader',
                 options: {
                     interpolate: true
-                    // minimize: true,
-                    // removeComments: true,
-                    // collapseWhitespace: true
                 }
             }]
             },
@@ -71,19 +68,29 @@ module.exports = {
                 ]
             },
             {
-                // Load all images as base64 encoding if they are smaller than 8192 bytes
-                test: /\.(png|jpg|gif|svg)$/,
+                test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
                 use: [
                     {
-                        loader: 'url-loader',
-                        options: {
-                            // On development we want to see where the file is coming from, hence we preserve the [path]
-                            name: '[path][name].[ext]?hash=[hash:20]',
-                            limit: 8192
-                        }
+                    loader: 'url-loader',
+                    options: {
+                        limit: 10000,
+                        mimetype: 'image/svg+xml',
+                        name: 'assets/[name].[ext]'
+                    }
                     }
                 ]
-            }
+            },
+            {
+            test: /\.(jpe?g|png|gif|ico)$/i,
+            use: [
+                {
+                loader: 'file-loader',
+                options: {
+                    name: 'assets/[name].[ext]'
+                }
+                }
+            ]
+            },
         ],
     },
     plugins: [

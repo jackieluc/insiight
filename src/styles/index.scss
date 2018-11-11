@@ -10,11 +10,13 @@ h1 {
     text-align: center;
 }
 
-.btn-primary {
+.primary-color {
+    color: white;
     background-color: #3ED2CC;
     border-color: #3ED2CC;
 
     &:hover {
+        color: white;
         background-color: #83DFDB;
         border-color: #83DFDB;
     }

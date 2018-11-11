@@ -25,11 +25,12 @@ module.exports = {
                 use: [ {
                 loader: 'html-loader',
                 options: {
+                    interpolate: true,
                     minimize: true,
                     removeComments: true,
                     collapseWhitespace: true
                 }
-                }],
+            }]
             },
             {
                 test: /\.js$/,
@@ -78,7 +79,8 @@ module.exports = {
                     {
                         loader: 'url-loader',
                         options: {
-                            name: '[name].[hash:20].[ext]',
+                            // On development we want to see where the file is coming from, hence we preserve the [path]
+                            name: '[path][name].[ext]?hash=[hash:20]',
                             limit: 8192
                         }
                     }
@@ -102,7 +104,7 @@ module.exports = {
         new CleanWebpackPlugin(buildPath),
         new FaviconsWebpackPlugin({
             // Your source logo
-            logo: './src/assets/logo.jpg',
+            logo: './src/assets/logo_transparent.png',
             // The prefix for all image files (might be a folder or a name)
             prefix: 'icons-[hash]/',
             // Generate a cache file with control hashes and

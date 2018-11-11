@@ -22,6 +22,18 @@ module.exports = {
     module: {
         rules: [
             {
+                test: /\.html$/,
+                use: [ {
+                loader: 'html-loader',
+                options: {
+                    interpolate: true
+                    // minimize: true,
+                    // removeComments: true,
+                    // collapseWhitespace: true
+                }
+            }]
+            },
+            {
                 test: /\.js$/,
                 exclude: /node_modules/,
                 loader: 'babel-loader',
@@ -57,8 +69,7 @@ module.exports = {
                     }
                     // Please note we are not running postcss here
                 ]
-            }
-            ,
+            },
             {
                 // Load all images as base64 encoding if they are smaller than 8192 bytes
                 test: /\.(png|jpg|gif|svg)$/,

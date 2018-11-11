@@ -16,6 +16,7 @@ module.exports = {
     },
     output: {
         filename: '[name].[hash:20].js',
+        publicPath: "/",
         path: buildPath
     },
     module: {
@@ -25,11 +26,12 @@ module.exports = {
                 use: [ {
                 loader: 'html-loader',
                 options: {
+                    interpolate: true,
                     minimize: true,
                     removeComments: true,
                     collapseWhitespace: true
                 }
-                }],
+            }]
             },
             {
                 test: /\.js$/,
@@ -72,18 +74,29 @@ module.exports = {
                 }),
             },
             {
-                // Load all images as base64 encoding if they are smaller than 8192 bytes
-                test: /\.(png|jpg|gif)$/,
+                test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
                 use: [
                     {
-                        loader: 'url-loader',
-                        options: {
-                            name: '[name].[hash:20].[ext]',
-                            limit: 8192
-                        }
+                    loader: 'url-loader',
+                    options: {
+                        limit: 10000,
+                        mimetype: 'image/svg+xml',
+                        name: 'assets/[name].[ext]'
+                    }
                     }
                 ]
-            }
+            },
+            {
+            test: /\.(jpe?g|png|gif|ico)$/i,
+            use: [
+                {
+                loader: 'file-loader',
+                options: {
+                    name: 'assets/[name].[ext]'
+                }
+                }
+            ]
+            },
         ]
     },
     plugins: [
@@ -108,7 +121,7 @@ module.exports = {
         new CleanWebpackPlugin(buildPath),
         new FaviconsWebpackPlugin({
             // Your source logo
-            logo: './src/assets/logo.jpg',
+            logo: './src/assets/logo_transparent.png',
             // The prefix for all image files (might be a folder or a name)
             prefix: 'icons-[hash]/',
             // Generate a cache file with control hashes and

@@ -39,10 +39,12 @@ npm run preview
 ├── .gitignore                # Tells git which files or folders to ignore
 ├── dist                      # Folder where the build script places the built app. Use this in prod.
 ├── docs                      # Documentation on development
+├── functions                 # Built AWS Lambda functions for Netlify from ./src/functions
 ├── node_modules              # Folder where 3rd party libraries and dependencies are installed to
 ├── src                       # Source code
 │   ├── assets                # Image and font assets
 │   ├── components            # Reusable, shareable, HTML component partials
+│   ├── functions             # AWS Lambda functions for Netlify source files
 │   ├── pages                 # Pages that exist in the website, with sub folders being the page names
 │   ├── styles                # CSS styles, written in Sass
 │   └── index.js              # Main Entry point for the website's home page
@@ -57,6 +59,7 @@ npm run preview
 ## How To's
 
 * [Create a new page](./docs/CreateNewPage.md)
+* [Use Netlify functions](./src/functions/README.md)
 
 ## Contributors 
 

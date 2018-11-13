@@ -57,7 +57,7 @@ function checkRoleFromDb() {
       if (!payload || !payload.role) openRoleModal();
       else {
         localStorage.setItem('role', payload.role);
-        // location.reload();
+         location.reload();
       }
     });
   })

@@ -27,24 +27,24 @@ const surveySchema = {
       },
       {
         type:"radiogroup",
-        name:"question3",
+        name:"How was the lecture material this week?",
         colCount: 5,
         isRequired:true,
-        choices:["item1","item2","item3","item4","item5"]
+        choices:["Very Hard","Hard","Average","Easy","Very Easy"]
       },
       {
         type:"radiogroup",
-        name:"question4",
+        name:"Do you find the material useful?",
         colCount: 5,
         isRequired: true,
-        choices:["item1","item2","item3","item4","item5"]
+        choices:["Absolutely Not","No","Neutral","Yes","Very Useful"]
       },
       {
         type:"radiogroup",
-        name:"question5",
+        name:"How comfortable are you with the material so far?",
         colCount: 5,
         isRequired:true,
-        choices:["item1","item2","item3","item4","item5"]
+        choices:["Very Uncomfortable","Uncomfortable","Neutral","Comfortable","Very Comfortable"]
       }
     ]
   }],
@@ -80,8 +80,6 @@ function submitSurvey(survey, joinCode) {
 
 function initSurvey(joinCode) {
   const survey = new Survey.Model(surveySchema);
-  survey.surveyPostId = '72167288-14c7-4f0e-af17-6c4955db4e9a';
-  survey.surveyShowDataSaving = false;
 
   survey.onComplete.add(function (survey) {
     submitSurvey(survey, joinCode);

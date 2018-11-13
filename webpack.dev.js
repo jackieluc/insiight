@@ -129,5 +129,11 @@ module.exports = {
             chunks: ['survey'],
             filename: './survey/index.html'
         }),
+        new HtmlWebpackPlugin({
+            template: './src/pages/survey/survey.html',
+            inject: true,
+            chunks: ['survey'],
+            filename: './survey/index.html'
+        }),
     ]
 };

@@ -7,7 +7,9 @@
         "test": "echo \"Error: no test specified\" && exit 1",
         "start": "webpack-dev-server --config webpack.dev.js --mode development",
         "build": "webpack --config webpack.prod.js --mode production",
-        "preview": "npm run build && http-server dist"
+        "preview": "npm run build && http-server dist",
+        "start:lambda": "netlify-lambda serve src/functions",
+        "build:lambda": "netlify-lambda build src/functions"
     },
     "repository": {
         "type": "git",
@@ -35,13 +37,14 @@
     },
     "homepage": "https://www.insiight.ca",
     "dependencies": {
+        "netlify-lambda": "^1.0.3",
         "normalize.css": "^8.0.0"
     },
     "devDependencies": {
+        "@babel/core": "^7.0.0",
+        "@babel/preset-env": "^7.0.0",
         "ajv": "^6.3.0",
-        "babel-core": "^6.26.3",
-        "babel-loader": "^7.1.4",
-        "babel-preset-env": "^1.7.0",
+        "babel-loader": "^8.0.0",
         "clean-webpack-plugin": "^0.1.19",
         "css-loader": "^0.28.11",
         "cssnano": "^3.10.0",

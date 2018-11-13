@@ -1,0 +1,103 @@
+html, body {
+    height: 100%;
+    width: 100%;
+    font-size: 16px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: regular;
+}
+
+h1 {
+    text-align: center;
+}
+
+.primary-color {
+    color: white;
+    background-color: #3ED2CC;
+    border-color: #3ED2CC;
+
+    &:hover {
+        color: white;
+        background-color: #83DFDB;
+        border-color: #83DFDB;
+    }
+}
+
+.navbar-nav {
+    align-items: flex-end;
+
+    @media (min-width: 1024px) {
+        align-items: center;
+    }
+
+    .nav-item {
+        margin-left: 25px;
+
+        .btn {
+            color: white;
+            padding: 8px 15px;
+
+            &:hover {
+                color: white;
+            }
+        }
+    }
+}
+
+.home-page {
+    height: 100vh;
+
+    header,
+    .illustration {
+        display: flex;
+        align-items: center;
+        height: 90vh;
+    }
+
+    header {
+        h1 {
+            text-align: left;
+            font-size: 3rem;
+        }
+        
+        p {
+            max-width: 90%;
+        }
+
+        .info {
+            display: block;
+        }
+    }
+
+    .illustration {
+        img {
+            width: 100%;
+        }
+    }
+    .sv_qstn .sq-root {
+        border: 1px solid gray;
+        border-left: 4px solid #18a689;
+        border-radius: 5px;
+        padding: 20px;
+        margin-bottom: 30px;
+    }
+    
+    .sv_qstn .sq-root-cb {
+        border-left: 4px solid orange;
+    }
+    
+    .sq-title {
+        font-size: 20px;
+        margin-left: 20px;
+    }
+    
+    .sq-title-required {
+        color: red;
+    }
+    
+    .sq-label {
+        margin-left: 30px;
+    }
+    .sq-item:nth-child(1) {
+        margin-bottom: 5px;
+    }
+}

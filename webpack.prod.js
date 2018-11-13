@@ -12,7 +12,8 @@ module.exports = {
     devtool: 'source-map',
     entry: {
         home: './src/index.js',
-        register: './src/pages/register/register.js'
+        register: './src/pages/register/register.js',
+        survey: './src/pages/survey/survey.js'
     },
     output: {
         filename: '[name].[hash:20].js',
@@ -117,6 +118,12 @@ module.exports = {
             inject: true,
             chunks: ['about'],
             filename: './about/index.html'
+        }),
+        new HtmlWebpackPlugin({
+            template: './src/pages/survey/survey.html',
+            inject: true,
+            chunks: ['survey'],
+            filename: './survey/survey.html'
         }),
         new CleanWebpackPlugin(buildPath),
         new FaviconsWebpackPlugin({

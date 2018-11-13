@@ -13,7 +13,8 @@ module.exports = {
     devtool: 'eval-cheap-module-source-map',
     entry: {
         home: './src/index.js',
-        register: './src/pages/register/register.js'
+        register: './src/pages/register/register.js',
+        survey: './src/pages/survey/survey.js'
     },
     devServer: {
         port: 5000,
@@ -111,6 +112,12 @@ module.exports = {
             inject: true,
             chunks: ['about'],
             filename: './about/index.html'
+        }),
+        new HtmlWebpackPlugin({
+            template: './src/pages/survey/survey.html',
+            inject: true,
+            chunks: ['survey'],
+            filename: './survey/index.html'
         }),
     ]
 };

@@ -1,0 +1,35 @@
+.dashboard-page {
+
+    height: calc(100vh - 58px); // remove height from navbar
+    background-color: #CCC;
+
+    .sidebar {
+        height: 100%;
+        width: 20%;
+        display: flex;
+        background-color: #AAA;
+
+        .bottom-section {
+            margin-top: auto;
+            width: 100%;
+            text-align: center;
+            background-color: #333;
+            height: 60px;
+            display: flex;
+            justify-content: center;
+
+            button {
+                background-color: transparent;
+                border-color: transparent;
+
+                &:hover {
+                    cursor: pointer;
+                }
+
+                img {
+                    width: 48px;
+                }
+            }
+        }
+    }
+}

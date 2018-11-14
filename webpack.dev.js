@@ -13,11 +13,18 @@ module.exports = {
     devtool: 'eval-cheap-module-source-map',
     entry: {
         home: './src/index.js',
+        dashboard: './src/pages/dashboard/dashboard.js',
         register: './src/pages/register/register.js'
     },
     devServer: {
         port: 5000,
-        contentBase: path.join(__dirname, "dist")
+        contentBase: path.join(__dirname, "dist"),
+        proxy: {
+            "/.netlify": {
+            target: "http://localhost:9000",
+            pathRewrite: { "^/.netlify/functions": "" }
+            }
+        }
     },
     module: {
         rules: [
@@ -108,6 +115,12 @@ module.exports = {
             inject: true,
             chunks: ['about'],
             filename: './about/index.html'
+        }),
+        new HtmlWebpackPlugin({
+            template: './src/pages/dashboard/dashboard.html',
+            inject: true,
+            chunks: ['dashboard'],
+            filename: './dashboard/index.html'
         }),
     ]
 };

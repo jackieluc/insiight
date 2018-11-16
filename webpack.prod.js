@@ -118,6 +118,12 @@ module.exports = {
             chunks: ['about'],
             filename: './about/index.html'
         }),
+        new HtmlWebpackPlugin({
+            template: './admin/admin.html',
+            inject: true,
+            chunks: ['admin'],
+            filename: './admin/admin.html' //not sure if i'm adding the admin page correctly
+        }),
         new CleanWebpackPlugin(buildPath),
         new FaviconsWebpackPlugin({
             // Your source logo

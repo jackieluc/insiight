@@ -34,6 +34,25 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700" rel="stylesheet">
     <!-- Bootstrap 4 -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script type="text/javascript" src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <script>
+            // Open the modal
+            netlifyIdentity.open();
+            // Get the current user:
+            const user = netlifyIdentity.currentUser();
+            // Bind to events
+            netlifyIdentity.on("init", user => console.log(user));
+            netlifyIdentity.on("login", user => console.log(user));
+            netlifyIdentity.on("logout", () => console.log("Logged out"));
+            netlifyIdentity.on("error", err => console.error("Logged out"));
+            netlifyIdentity.on("open", () => console.log("Widget opened"));
+            netlifyIdentity.on("close", () => console.log("Widget closed"));
+            // Close the modal
+            netlifyIdentity.close();
+
+            // Log out the user
+            netlifyIdentity.logout();
+    </script>
 </head>
 <body>
     <main class="container home-page">
@@ -43,7 +62,10 @@
                 <div class="info">
                     <h1>Better learning experience starts now.</h1>
                     <p>InSiight is the best software platform to enable professors and students to collaborate in enhancing the learning experience.</p>
-                    <a href="/register" class="create-account btn primary-color" role="button">Gain some InSiight today</a>
+                    <div data-netlify-identity-button>Gain some InSiight today</div>
+                    <li>
+                        <a href="/admin/">Student test page</a>
+                    </li>
                 </div>
             </header>
             <div class="col-md-6 illustration">
@@ -51,10 +73,22 @@
             </div>
         </div>
     </main>
+    
 
     <!-- Bootstrap 4 & jQuery scripts -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script>
+        if (window.netlifyIdentity) {
+          window.netlifyIdentity.on("init", user => {
+            if (!user) {
+              window.netlifyIdentity.on("login", () => {
+                document.location.href = "/admin";
+              });
+            }
+          });
+        }
+    </script>
 </body>
 </html>

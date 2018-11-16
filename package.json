@@ -35,7 +35,9 @@
     },
     "homepage": "https://www.insiight.ca",
     "dependencies": {
-        "normalize.css": "^8.0.0"
+        "netlify-cms": "^2.2.0",
+        "normalize.css": "^8.0.0",
+        "slate": "^0.32.0"
     },
     "devDependencies": {
         "ajv": "^6.3.0",

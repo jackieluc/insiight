@@ -122,16 +122,12 @@ module.exports = {
             template: './admin/admin.html',
             inject: true,
             chunks: ['admin'],
-<<<<<<< HEAD
-            filename: 'admin.html'
-=======
             filename: './admin/admin.html' //not sure if i'm adding the admin page correctly
->>>>>>> 14105f92bac45e0154d06e756061ce04b6e63501
         }),
         new CleanWebpackPlugin(buildPath),
         new FaviconsWebpackPlugin({
             // Your source logo
-            logo: './src/assets/logo.ico',
+            logo: './src/assets/logo_transparent.png',
             // The prefix for all image files (might be a folder or a name)
             prefix: 'icons-[hash]/',
             // Generate a cache file with control hashes and

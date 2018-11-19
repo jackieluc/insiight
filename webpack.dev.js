@@ -119,11 +119,5 @@ module.exports = {
             chunks: ['admin'],
             filename: './admin/admin.html' //not sure if i'm adding admin page correctly
         }),
-        new HtmlWebpackPlugin({
-            template: './admin/admin.html',
-            inject: true,
-            chunks: ['admin'],
-            filename: 'admin.html'
-        }),
     ]
 };

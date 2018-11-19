@@ -21,7 +21,7 @@ npm install
 npm start
 ```
 
-You should see your website at https://localhost:5000. Any time you save your changes to your files, it will automatically be reloaded on the server. This is called "hot reloading".
+You should see your website at https://localhost:8080. Any time you save your changes to your files, it will automatically be reloaded on the server. This is called "hot reloading".
 
 5. Create a production build
 ```

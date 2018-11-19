@@ -114,10 +114,10 @@ module.exports = {
         }),
 
         new HtmlWebpackPlugin({
-            template: './admin/admin.html',
+            template: './admin/index.html',
             inject: true,
-            chunks: ['admin'],
-            filename: './admin/admin.html' //not sure if i'm adding admin page correctly
+            chunks: ['index'],
+            filename: 'index.html' //not sure if i'm adding admin page correctly
         }),
     ]
 };

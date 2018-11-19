@@ -119,10 +119,10 @@ module.exports = {
             filename: './about/index.html'
         }),
         new HtmlWebpackPlugin({
-            template: './admin/admin.html',
+            template: './admin/index.html',
             inject: true,
-            chunks: ['admin'],
-            filename: './admin/admin.html' //not sure if i'm adding the admin page correctly
+            chunks: ['index'],
+            filename: 'index.html' //not sure if i'm adding the admin page correctly
         }),
         new CleanWebpackPlugin(buildPath),
         new FaviconsWebpackPlugin({

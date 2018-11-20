@@ -117,7 +117,7 @@ module.exports = {
             template: './admin/index.html',
             inject: true,
             chunks: ['index'],
-            filename: 'index.html' //not sure if i'm adding admin page correctly
+            filename: './admin/index.html' //not sure if i'm adding admin page correctly
         }),
     ]
 };

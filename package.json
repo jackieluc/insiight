@@ -5,7 +5,7 @@
     "main": "index.js",
     "scripts": {
         "start": "webpack-dev-server --config webpack.dev.js --mode development",
-        "build": "webpack --config webpack.prod.js --mode production",
+        "build": "webpack --config webpack.prod.js --mode production && npm run build:lambda",
         "preview": "npm run build && http-server dist",
         "start:lambda": "netlify-lambda serve src/functions",
         "build:lambda": "netlify-lambda build src/functions"

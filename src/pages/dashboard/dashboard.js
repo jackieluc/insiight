@@ -31,23 +31,36 @@ $('document').ready(() => {
 
   // Takes the information from the form and submits it to add-course Netlify function
   $('.add-course-button').on('click', () => {
-    
-    const courseInfo = $('#add-course-form').find('input').map((index, inputField) => {
-      let courseObject = {};
-      courseObject[inputField.name] = inputField.value;
+    const form = $('#add-course-form');
+    const role = form.find('select').get(0).value;
+    const courseInfo = form.find('input').get(0).value;
 
-      return courseObject;
-    });
+    const courseObject = {
+      'role': role,
+      'courseInfo': courseInfo,
+      'name': 'n/a'
+    };
 
     fetch('/.netlify/functions/add-course', {
       method: "POST",
-      body: JSON.stringify(courseInfo)
+      body: JSON.stringify(courseObject)
     })
     .then(response => {
       if (!response.ok) {
         return response.text().then(err => {throw(err)});
       }
       response.text().then(console.log);
+
+      // close the modal
+      $('#add-course-modal .modal-footer button:first').click();
+
+      // add course to list in sidebar
+      // $('.sidebar .bottom-section').prepend(`
+      //   <div class="course-info">
+      //     <p>Course name: ${JSON.parse(response.text()).courseName}</p>
+      //     <p>Course name: ${JSON.parse(response.text()).joinCode}</p>
+      //   </div>
+      // `);
     })
     .catch(err => console.error(err));
   });

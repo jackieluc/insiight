@@ -21,14 +21,21 @@ npm install
 npm start
 ```
 
-You should see your website at https://localhost:8080. Any time you save your changes to your files, it will automatically be reloaded on the server. This is called "hot reloading".
+You should see your website at https://localhost:5000. Any time you save your changes to your files, it will automatically be reloaded on the server. This is called "hot reloading".
 
-5. Create a production build
+5. Start a development AWS Lambda functions server
+```
+npm start:lambda
+```
+
+AWS Lambda functions development server is at https://localhost:9000/{function-name}
+
+6. Create a production build
 ```
 npm run build
 ```
 
-6. Preview the production build
+7. Preview the production build
 ```
 npm run preview
 ```
@@ -39,10 +46,12 @@ npm run preview
 ├── .gitignore                # Tells git which files or folders to ignore
 ├── dist                      # Folder where the build script places the built app. Use this in prod.
 ├── docs                      # Documentation on development
+├── functions                 # Built AWS Lambda functions for Netlify from ./src/functions
 ├── node_modules              # Folder where 3rd party libraries and dependencies are installed to
 ├── src                       # Source code
 │   ├── assets                # Image and font assets
 │   ├── components            # Reusable, shareable, HTML component partials
+│   ├── functions             # AWS Lambda functions for Netlify source files
 │   ├── pages                 # Pages that exist in the website, with sub folders being the page names
 │   ├── styles                # CSS styles, written in Sass
 │   └── index.js              # Main Entry point for the website's home page
@@ -57,6 +66,7 @@ npm run preview
 ## How To's
 
 * [Create a new page](./docs/CreateNewPage.md)
+* [Use Netlify functions](./src/functions/README.md)
 
 ## Contributors 
 

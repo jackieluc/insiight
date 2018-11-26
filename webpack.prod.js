@@ -12,6 +12,7 @@ module.exports = {
     devtool: 'source-map',
     entry: {
         home: './src/index.js',
+        dashboard: './src/pages/dashboard/dashboard.js',
         register: './src/pages/register/register.js'
     },
     output: {
@@ -37,10 +38,6 @@ module.exports = {
                 test: /\.js$/,
                 exclude: /node_modules/,
                 loader: 'babel-loader',
-
-                options: {
-                    presets: ['env']
-                }
             },
             {
                 test: /\.(scss|css|sass)$/,
@@ -123,6 +120,12 @@ module.exports = {
             inject: true,
             chunks: ['index'],
             filename: './admin/index.html' //not sure if i'm adding the admin page correctly
+        }),
+        new HtmlWebpackPlugin({
+            template: './src/pages/dashboard/dashboard.html',
+            inject: true,
+            chunks: ['dashboard'],
+            filename: './dashboard/index.html'
         }),
         new CleanWebpackPlugin(buildPath),
         new FaviconsWebpackPlugin({

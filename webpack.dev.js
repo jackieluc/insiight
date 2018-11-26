@@ -13,11 +13,18 @@ module.exports = {
     devtool: 'eval-cheap-module-source-map',
     entry: {
         home: './src/index.js',
+        dashboard: './src/pages/dashboard/dashboard.js',
         register: './src/pages/register/register.js'
     },
     devServer: {
         port: 5000,
-        contentBase: path.join(__dirname, "dist")
+        contentBase: path.join(__dirname, "dist"),
+        proxy: {
+            "/.netlify": {
+            target: "http://localhost:9000",
+            pathRewrite: { "^/.netlify/functions": "" }
+            }
+        }
     },
     module: {
         rules: [
@@ -33,10 +40,7 @@ module.exports = {
             {
                 test: /\.js$/,
                 exclude: /node_modules/,
-                loader: 'babel-loader',
-                options: {
-                    presets: ['env']
-                }
+                loader: 'babel-loader'
             },
             {
                 test: /\.(scss|css)$/,
@@ -118,6 +122,12 @@ module.exports = {
             inject: true,
             chunks: ['index'],
             filename: './admin/index.html' //not sure if i'm adding admin page correctly
+        }),
+        new HtmlWebpackPlugin({
+            template: './src/pages/dashboard/dashboard.html',
+            inject: true,
+            chunks: ['dashboard'],
+            filename: './dashboard/index.html'
         }),
     ]
 };

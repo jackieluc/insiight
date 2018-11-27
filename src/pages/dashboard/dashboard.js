@@ -31,10 +31,10 @@ function removeProfessorForm() {
   $('.course-name').remove();
 };
 
-$('document').ready(() => {
+$('document').ready(function() {
 
   // Takes the information from the form and submits it to add-course Netlify function
-  $('.add-course-button').on('click', () => {
+  $('.add-course-button').on('click', function() {
     const form = $('#add-course-form');
     const role = form.find('select').get(0).value;
     const courseInfo = form.find('input').get(0).value;
@@ -56,19 +56,19 @@ $('document').ready(() => {
           .then(err => {throw(err)});
       }
 
-      
-      response.text().then(console.log);
+      response.text().then(function(result) {
+        // add course to list in sidebar
+        $('.sidebar .courses').append(`
+          <div class="course-info">
+            <p>Course Name: ${JSON.parse(result).courseName}</p>
+            <p>Professor: ${JSON.parse(result).professor}</p>
+            <p>Join Code: ${JSON.parse(result).joinCode}</p>
+          </div>
+        `);
+      });
 
       // close the modal
       $('#add-course-modal .modal-footer button:first').click();
-
-      // add course to list in sidebar
-      // $('.sidebar .bottom-section').prepend(`
-      //   <div class="course-info">
-      //     <p>Course name: ${JSON.parse(response.text()).courseName}</p>
-      //     <p>Course name: ${JSON.parse(response.text()).joinCode}</p>
-      //   </div>
-      // `);
     })
     .catch(err => console.error(err));
   });

@@ -49,35 +49,3 @@ div#surveyContainer{
         }
     }
 }
-
-.survey-page {
-    height: 100vh;
-
-    header,
-    .illustration {
-        display: flex;
-        align-items: center;
-        height: 90vh;
-    }
-
-    header {
-        h1 {
-            text-align: left;
-            font-size: 3rem;
-        }
-        
-        p {
-            max-width: 90%;
-        }
-
-        .info {
-            display: block;
-        }
-    }
-
-    .illustration {
-        img {
-            width: 100%;
-        }
-    }
-}

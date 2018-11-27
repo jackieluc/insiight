@@ -9,6 +9,15 @@ $('document').ready(() => {
 
 //Survey
 //Survey.Survey.cssType = "bootstrap";
+var defaultThemeColors = Survey
+    .StylesManager
+    .ThemeColors["default"];
+defaultThemeColors["$main-color"] = "#3ED2CC";
+defaultThemeColors["$main-hover-color"] = "#83DFDB";
+
+Survey
+    .StylesManager
+    .applyTheme();
 
 
 var surveyJSON = {questionTitleTemplate : "{no}. {title}",
@@ -42,10 +51,16 @@ var surveyJSON = {questionTitleTemplate : "{no}. {title}",
 }],
 completeText:"Submit"
 }
+var survey = new Survey.Model(surveyJSON);
+survey.surveyPostId = '72167288-14c7-4f0e-af17-6c4955db4e9a';
+survey.surveyShowDataSaving = true;
+
+
 
 function sendDataToServer(survey) {
     //send Ajax request to your web server.
     alert("The results are:" + JSON.stringify(survey.data));
+    
 }
 
 var survey = new Survey.Model(surveyJSON);

@@ -36,8 +36,8 @@ exports.handler = function(event, context, callback) {
   const payload = JSON.parse(event.body);
   const role = payload.role;
 
-  MongoClient.connect(DB_URL, { useNewUrlParser: true }, (err, connection) => {
-    
+  MongoClient.connect(DB_URL, { useNewUrlParser: true }, function(err, connection) {
+
     if (err) return errorResponse(callback, err);
 
     console.log('Database successfully connected.');
@@ -51,14 +51,14 @@ exports.handler = function(event, context, callback) {
 
       console.log(`Looking for course code: ${joinCode} in database...`);
 
-      courses.findOne({ joinCode: joinCode }, (err, result) => {
+      courses.findOne({ joinCode: joinCode }, function(err, course) {
         if (err) errorResponse(callback, err);
 
         console.log(`Found course with course code ${joinCode} in the database!`);
-        console.log(result);
+        console.log(course);
         
         connection.close();
-        successResponse(callback, result);
+        successResponse(callback, course);
       });
     }
     else if (role === 'professor') {
@@ -70,7 +70,7 @@ exports.handler = function(event, context, callback) {
         'professor': 'n/a'
       };
 
-      courses.insertOne(courseObject, (err, result) => {
+      courses.insertOne(courseObject, function(err, result) {
         if (err) errorResponse(callback, err);
         
         console.log('Added the following course to the database: ')

@@ -39,7 +39,59 @@ fetch('/.netlify/functions/add-course', {
   if (!response.ok) {
     return response.text().then(err => {throw(err)});
   }
-  response.text().then(console.log);
+  // Your response from the Netlify Function is here
+  response.text().then(function(result) {
+    // do something with the result
+  });
 })
 .catch(err => console.error(err));
+```
+
+## MongoDB
+
+Add the following to the top of the `Netlify Function`
+
+```
+const { MongoClient } = require('mongodb');
+
+const DB_NAME = 'insiight';
+const DB_URL = `mongodb://${process.env.insiightUser}:${process.env.insiightPw}@ds151863.mlab.com:51863/${DB_NAME}`;
+
+// Generic Error Response from the Netlify Function
+function errorResponse(callback, err) {
+  console.error('END: Error response.');
+  console.error(err);
+
+  callback(null, {
+    statusCode: 500,
+    body: JSON.stringify({ error: err })
+  });
+};
+
+// Generic Success Response from the Netlify Function
+function successResponse(callback, res) {
+  console.log('END: Success response.');
+
+  callback(null, {
+    statusCode: 200,
+    body: JSON.stringify(res)
+  });
+};
+```
+
+Add this inside the `exports.handler` function:
+
+```
+MongoClient.connect(DB_URL, { useNewUrlParser: true }, function(err, connection) {
+
+  if (err) return errorResponse(callback, err);
+
+  console.log('Database successfully connected.');
+
+  const db = connection.db(DB_NAME); // Specify the database we are connecting to
+  const courses = db.collection('courses'); // Specify the collection we want
+
+  connection.close(); // Close the connection when done
+  successResponse(callback, result.ops[0]); // Return the result of the operation,  find out more about what the result.ops[0] is:  http://mongodb.github.io/node-mongodb-native/3.1/api/Collection.html#~insertOneWriteOpResult
+}
 ```

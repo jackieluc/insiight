@@ -13,7 +13,7 @@ var defaultThemeColors = Survey
     .StylesManager
     .ThemeColors["default"];
 defaultThemeColors["$main-color"] = "#3ED2CC";
-defaultThemeColors["$main-hover-color"] = "#6fe06f";
+defaultThemeColors["$main-hover-color"] = "#83DFDB";
 
 Survey
     .StylesManager
@@ -52,11 +52,15 @@ var surveyJSON = {questionTitleTemplate : "{no}. {title}",
 completeText:"Submit"
 }
 var survey = new Survey.Model(surveyJSON);
+survey.surveyPostId = '72167288-14c7-4f0e-af17-6c4955db4e9a';
+survey.surveyShowDataSaving = true;
+
 
 
 function sendDataToServer(survey) {
     //send Ajax request to your web server.
     alert("The results are:" + JSON.stringify(survey.data));
+    
 }
 
 

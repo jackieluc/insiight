@@ -30,27 +30,8 @@
         .sv_main {
             font-size: 1rem;
 
-            .sv_body {
-                border-top: 0;
-                padding: 0;
-
-                .sv_page_title {
-                    padding: 1rem 3rem 0 3rem;
-                }
-
-                .sv_q {
-                    padding: 0.5rem 3rem;
-                }
-
-                .sv_complete_btn {
-                    margin-right: 15px;
-                }
-
-                &.sv_completed_page {
-                    h3 {
-                        margin-top: 40vh;
-                    }
-                }
+            &:hover {
+                color: white;
             }
         }
     }

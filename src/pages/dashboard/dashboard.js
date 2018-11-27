@@ -1,7 +1,8 @@
 import 'normalize.css/normalize.css';
 import '../../styles/index.scss';
 
-const addStudentForm = () => {
+function addStudentForm() {
+
   $('#add-course-form').append(`
     <div class="course-code input-block">
       <label for="course-code">Join code</label>
@@ -10,11 +11,13 @@ const addStudentForm = () => {
   `);
 };
 
-const removeStudentForm = () => {
+function removeStudentForm() {
+
   $('.course-code').remove();
 };
 
-const addProfessorForm = () => {
+function addProfessorForm() {
+
   $('#add-course-form').append(`
     <div class="course-name input-block">
       <label for="course-name">Course name</label>
@@ -23,7 +26,8 @@ const addProfessorForm = () => {
   `);
 };
 
-const removeProfessorForm = () => {
+function removeProfessorForm() {
+  
   $('.course-name').remove();
 };
 
@@ -47,8 +51,12 @@ $('document').ready(() => {
     })
     .then(response => {
       if (!response.ok) {
-        return response.text().then(err => {throw(err)});
+        return response
+          .text()
+          .then(err => {throw(err)});
       }
+
+      
       response.text().then(console.log);
 
       // close the modal
@@ -67,9 +75,9 @@ $('document').ready(() => {
 
   // Toggle student and professor forms
   $('select.role').on('change', () => {
-    let val = $('select.role').val();
+    let role = $('select.role').val();
 
-    if (val === 'professor') {
+    if (role === 'professor') {
       removeStudentForm();
       addProfessorForm();
     } 

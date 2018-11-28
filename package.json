@@ -35,6 +35,7 @@
     },
     "homepage": "https://www.insiight.ca",
     "dependencies": {
+        "chart.js": "^2.7.3",
         "normalize.css": "^8.0.0"
     },
     "devDependencies": {

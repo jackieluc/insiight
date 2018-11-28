@@ -14,7 +14,8 @@ module.exports = {
     entry: {
         home: './src/index.js',
         register: './src/pages/register/register.js',
-        survey: './src/pages/survey/survey.js'
+        survey: './src/pages/survey/survey.js',
+        results:'./src/pages/results/results.js'
     },
     devServer: {
         port: 5000,
@@ -118,6 +119,12 @@ module.exports = {
             inject: true,
             chunks: ['survey'],
             filename: './survey/index.html'
+        }),
+        new HtmlWebpackPlugin({
+            template: './src/pages/results/results.html',
+            inject: true,
+            chunks: ['results'],
+            filename: './results/index.html'
         }),
     ]
 };

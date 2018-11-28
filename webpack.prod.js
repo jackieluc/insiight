@@ -13,7 +13,8 @@ module.exports = {
     entry: {
         home: './src/index.js',
         register: './src/pages/register/register.js',
-        survey: './src/pages/survey/survey.js'
+        survey: './src/pages/survey/survey.js',
+        results:'./src/pages/results/results.js'
     },
     output: {
         filename: '[name].[hash:20].js',
@@ -123,7 +124,13 @@ module.exports = {
             template: './src/pages/survey/survey.html',
             inject: true,
             chunks: ['survey'],
-            filename: './survey/survey.html'
+            filename: './survey/index.html'
+        }),
+        new HtmlWebpackPlugin({
+            template: './src/pages/results/results.html',
+            inject: true,
+            chunks: ['results'],
+            filename: './results/index.html'
         }),
         new CleanWebpackPlugin(buildPath),
         new FaviconsWebpackPlugin({

@@ -6,6 +6,11 @@ import { initRoleSelection, bindRoleSelection } from '../src/utils/role-modal';
 // or prompts the user to select a role (they cannot exit without choosing one)
 initRoleSelection();
 
+// Clear the role on logout
+netlifyIdentity.on('logout', () => {
+  delete localStorage.role;
+});
+
 $('document').ready(() => {
   
   $('button.main-cta').on('click', () => {

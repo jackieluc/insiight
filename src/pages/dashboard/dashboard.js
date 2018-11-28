@@ -43,6 +43,10 @@ function addCourseToSideBar(course) {
 // or prompts the user to select a role (they cannot exit without choosing one)
 initRoleSelection();
 
+netlifyIdentity.on('logout', () => {
+  delete localStorage.role;
+});
+
 $('document').ready(function() {
 
   // Bind on-click handler for selecting a role in the modal

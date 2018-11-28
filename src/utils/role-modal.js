@@ -10,7 +10,6 @@ function closeRoleModal() {
 
 // Add the user with their role in the database
 function addRoleToDb(role) {
-
   const user = netlifyIdentity.currentUser();
   const userSchema = {
     'name': user.user_metadata.full_name,
@@ -36,6 +35,32 @@ function addRoleToDb(role) {
   .catch(err => console.error(err));
 };
 
+function checkRoleFromDb() {
+  const user = netlifyIdentity.currentUser();
+
+  fetch('/.netlify/functions/get-user', {
+    method: "POST",
+    body: JSON.stringify({ email: user.email })
+  })
+  .then(response => {
+    if (!response.ok) {
+      return response
+        .text()
+        .then(err => {throw(err)});
+    };
+
+    response.text().then(function(result) {
+      const role = JSON.parse(result).role;
+
+      // Prompt the user to get their role
+      // or set the role from the DB
+      if (!role.length) openRoleModal();
+      else localStorage.setItem('role', role);
+    });
+  })
+  .catch(err => console.error(err));
+};
+
 module.exports = {
   initRoleSelection: function() {
     netlifyIdentity.on('login', (user) => {
@@ -43,8 +68,8 @@ module.exports = {
         $('.netlify-identity-item.netlify-identity-user-details span').text('Hi, ' + user.user_metadata.full_name);
       }, 20);
     
-      if (!Boolean(localStorage.getItem('role'))) {
-        openRoleModal();
+      if (!Boolean(localStorage.getItem('role'))) {        
+        checkRoleFromDb();
       };
     });
   },

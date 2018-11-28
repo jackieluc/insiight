@@ -2,7 +2,6 @@ import 'normalize.css/normalize.css';
 import '../../styles/index.scss';
 
 function addStudentForm() {
-
   $('#add-course-form').append(`
     <div class="course-code input-block">
       <label for="course-code">Join code</label>
@@ -12,12 +11,10 @@ function addStudentForm() {
 };
 
 function removeStudentForm() {
-
   $('.course-code').remove();
 };
 
 function addProfessorForm() {
-
   $('#add-course-form').append(`
     <div class="course-name input-block">
       <label for="course-name">Course name</label>
@@ -27,9 +24,24 @@ function addProfessorForm() {
 };
 
 function removeProfessorForm() {
-  
   $('.course-name').remove();
 };
+
+// Add course to list in sidebar
+function addCourseToSideBar(course) {
+  $('.sidebar .courses').append(`
+    <div class="course-info">
+      <p>Course Name: ${course.courseName}</p>
+      <p>Professor: ${course.professor}</p>
+      <p>Join Code: ${course.joinCode}</p>
+    </div>
+  `);
+};
+
+// Closes the 'Add course' modal
+function closeModal() {
+  $('#add-course-modal .modal-footer button:first').click();
+}
 
 $('document').ready(function() {
 
@@ -57,18 +69,11 @@ $('document').ready(function() {
       }
 
       response.text().then(function(result) {
-        // add course to list in sidebar
-        $('.sidebar .courses').append(`
-          <div class="course-info">
-            <p>Course Name: ${JSON.parse(result).courseName}</p>
-            <p>Professor: ${JSON.parse(result).professor}</p>
-            <p>Join Code: ${JSON.parse(result).joinCode}</p>
-          </div>
-        `);
+        const course = JSON.parse(result);
+        addCourseToSideBar(course);
       });
 
-      // close the modal
-      $('#add-course-modal .modal-footer button:first').click();
+      closeModal();
     })
     .catch(err => console.error(err));
   });

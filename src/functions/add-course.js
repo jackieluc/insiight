@@ -51,6 +51,7 @@ exports.handler = function(event, context, callback) {
 
       console.log(`Looking for course code: ${joinCode} in database...`);
 
+      // Happy path.. does not check for duplicates
       courses.findOne({ joinCode: joinCode }, function(err, course) {
         if (err) errorResponse(callback, err);
 
@@ -70,6 +71,7 @@ exports.handler = function(event, context, callback) {
         'professor': 'n/a'
       };
 
+      // Happy path.. does not check for duplicates
       courses.insertOne(courseObject, function(err, result) {
         if (err) errorResponse(callback, err);
         

@@ -23,7 +23,9 @@ button.call-to-action {
 }
 
 [data-netlify-identity-button] a:hover,
-[data-netlify-identity-button] a:focus {
+[data-netlify-identity-button] a:focus,
+button.call-to-action:hover,
+button.call-to-action:focus {
     background-color: #83DFDB;
     text-decoration: none;
 }

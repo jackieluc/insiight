@@ -41,7 +41,7 @@
     <div class="container">
         ${require('../../components/nav.html')}
     </div>
-    <div class="container-fluid dashboard-page p-0">
+    <main class="container-fluid dashboard-page p-0">
 
         <!-- Sidebar -->
         <div class="sidebar">
@@ -53,7 +53,7 @@
                 </button>
             </div>
         </div>
-    </div>
+    </main>
 
     <!-- Add course modal -->
     <div class="modal fade" id="add-course-modal" tabindex="-1" role="dialog" aria-labelledby="add-course-modal-title" aria-hidden="true">
@@ -86,11 +86,12 @@
             </div>
           </div>
         </div>
-      </div>
+    </div>
+
+    <!-- Pick role modal -->
+    ${require('../../components/role-modal.html')}
 
     <!-- Bootstrap 4 & jQuery scripts -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    ${require('../../components/bootstrap-scripts.html')}
 </body>
 </html>

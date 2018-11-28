@@ -51,7 +51,7 @@ $('document').ready(function() {
     const role = form.find('select').get(0).value;
     const courseInfo = form.find('input').get(0).value;
 
-    const courseObject = {
+    const courseSchema = {
       'role': role,
       'courseInfo': courseInfo,
       'name': 'n/a'
@@ -59,7 +59,7 @@ $('document').ready(function() {
 
     fetch('/.netlify/functions/add-course', {
       method: "POST",
-      body: JSON.stringify(courseObject)
+      body: JSON.stringify(courseSchema)
     })
     .then(response => {
       if (!response.ok) {

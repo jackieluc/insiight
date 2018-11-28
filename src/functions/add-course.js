@@ -65,14 +65,14 @@ exports.handler = function(event, context, callback) {
     else if (role === 'professor') {
 
       const courseName = payload.courseInfo;
-      const courseObject = {
+      const courseSchema = {
         'courseName': courseName,
         'joinCode': getNewJoinCode(),
         'professor': 'n/a'
       };
 
       // Happy path.. does not check for duplicates
-      courses.insertOne(courseObject, function(err, result) {
+      courses.insertOne(courseSchema, function(err, result) {
         if (err) errorResponse(callback, err);
         
         console.log('Added the following course to the database: ')

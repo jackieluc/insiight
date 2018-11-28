@@ -3,7 +3,8 @@
     font-size: 0;
 }
 
-[data-netlify-identity-button] a {
+[data-netlify-identity-button] a,
+button.call-to-action {
     display: inline-block;
     font-size: 16px;
     height: auto;

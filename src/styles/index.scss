@@ -77,3 +77,33 @@ h1 {
         }
     }
 }
+
+#pick-role-modal {
+    .modal-body {
+        display: flex;
+        justify-content: center;
+        padding: 30px;
+
+        .card {
+            width: 40%;
+
+            &:first-of-type {
+                margin-right: 30px;
+            }
+
+            .card-title {
+                margin-bottom: 2rem;
+            }
+
+            .card-text {
+                margin-bottom: 1.5rem;
+            }
+
+            .card-body {
+                button {
+                    margin: 0 auto;
+                }
+            }
+        }
+    }
+}

@@ -96,12 +96,13 @@ button.call-to-action:focus {
 }
 
 .netlify-identity-user-details {
-    display: block;
+    display: inline-block;
+    font-size: 0;
 }
 
 .netlify-identity-user {
+    font-size: 16px;
     font-weight: 500;
     color: #2d3b41;
-    display: block;
-    margin-top: 8px;
+    display: inline-block;
 }

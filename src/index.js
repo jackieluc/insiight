@@ -1,23 +1,17 @@
 import 'normalize.css/normalize.css';
 import './styles/index.scss';
+import { initRoleSelection, bindRoleSelection } from '../src/utils/role-modal';
 
-window.onload = function()
-{
-  if (netlifyIdentity.currentUser()) {
-    const name = netlifyIdentity.currentUser().user_metadata.full_name;
-    $('.netlify-identity-item.netlify-identity-user-details span').text('Hi, ' + name);
-  }
-}
-
-netlifyIdentity.on('login', (user) => {
-  setTimeout(function(){ 
-    $('.netlify-identity-item.netlify-identity-user-details span').text('Hi, ' + user.user_metadata.full_name);
-  }, 20);  
-});
+// Initializes and finds out if a user has a 'student' or 'professor' role
+// or prompts the user to select a role (they cannot exit without choosing one)
+initRoleSelection();
 
 $('document').ready(() => {
   
-  $('button.call-to-action').on('click', () => {
+  $('button.main-cta').on('click', () => {
     netlifyIdentity.open('signup');
   });
+
+  // Bind on-click handler for selecting a role in the modal
+  bindRoleSelection();
 });

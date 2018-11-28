@@ -43,6 +43,7 @@ function addCourseToSideBar(course) {
 // or prompts the user to select a role (they cannot exit without choosing one)
 initRoleSelection();
 
+// Clear the role on logout
 netlifyIdentity.on('logout', () => {
   delete localStorage.role;
 });

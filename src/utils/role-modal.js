@@ -50,12 +50,12 @@ function checkRoleFromDb() {
     };
 
     response.text().then(function(result) {
-      const role = JSON.parse(result).role;
-
+      const payload = JSON.parse(result);
+    
       // Prompt the user to get their role
       // or set the role from the DB
-      if (!role.length) openRoleModal();
-      else localStorage.setItem('role', role);
+      if (!payload) openRoleModal();
+      else localStorage.setItem('role', payload.role);
     });
   })
   .catch(err => console.error(err));

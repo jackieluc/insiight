@@ -38,11 +38,6 @@ function addCourseToSideBar(course) {
   `);
 };
 
-// Closes the 'Add course' modal
-function closeModal() {
-  $('#add-course-modal .modal-footer button:first').click();
-};
-
 window.onload = function() {
   if (netlifyIdentity.currentUser()) {
     const name = netlifyIdentity.currentUser().user_metadata.full_name;
@@ -86,7 +81,7 @@ $('document').ready(function() {
         addCourseToSideBar(course);
       });
 
-      closeModal();
+      $('#add-course-modal').modal('hide')
     })
     .catch(err => console.error(err));
   });

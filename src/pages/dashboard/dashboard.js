@@ -76,7 +76,7 @@ $('document').ready(function() {
         addCourseToSideBar(course);
       });
 
-      $('#add-course-modal').modal('hide')
+      $('#add-course-modal').modal('hide');
     })
     .catch(err => console.error(err));
   });

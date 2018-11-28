@@ -8,6 +8,34 @@ function closeRoleModal() {
   $('.modal-backdrop').remove();
 };
 
+// Add the user with their role in the database
+function addRoleToDb(role) {
+
+  const user = netlifyIdentity.currentUser();
+  const userSchema = {
+    'name': user.user_metadata.full_name,
+    'email': user.email,
+    'role': role,
+  };
+
+  fetch('/.netlify/functions/add-user', {
+    method: "POST",
+    body: JSON.stringify(userSchema)
+  })
+  .then(response => {
+    if (!response.ok) {
+      return response
+        .text()
+        .then(err => {throw(err)});
+    };
+
+    response.text().then(function(result) {
+      console.log('Aded user to the database');
+    });
+  })
+  .catch(err => console.error(err));
+};
+
 module.exports = {
   initRoleSelection: function() {
     netlifyIdentity.on('login', (user) => {
@@ -15,21 +43,21 @@ module.exports = {
         $('.netlify-identity-item.netlify-identity-user-details span').text('Hi, ' + user.user_metadata.full_name);
       }, 20);
     
-      if (!Boolean(localStorage['role'])) {
+      if (!Boolean(localStorage.getItem('role'))) {
         openRoleModal();
-
       };
     });
   },
   bindRoleSelection: function() {
     $('#pick-role-modal button.call-to-action').on('click', (event) => {
-      localStorage['role'] = event.target.value;
+      localStorage.setItem('role', event.target.value);
       closeRoleModal();
+      addRoleToDb(localStorage.getItem('role'));
 
       // Redirect to dashboard page
       if (!window.location.href.includes('dashboard')) {
         window.location.href="/dashboard";
       };
-    });
+    });    
   }
 };

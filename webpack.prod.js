@@ -12,8 +12,8 @@ module.exports = {
     devtool: 'source-map',
     entry: {
         home: './src/index.js',
-        studentDashboard: './src/pages/student/dashboard.js',
-        professorDashboard: './src/pages/professor/dashboard.js',
+        dashboard: './src/pages/dashboard/dashboard.js',
+        register: './src/pages/register/register.js',
         survey: './src/pages/survey/survey.js',
         results:'./src/pages/results/results.js'
     },

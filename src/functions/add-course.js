@@ -1,7 +1,7 @@
 const { MongoClient } = require('mongodb');
+const { insiightDb, insiightUser, insiightPw } = process.env;
 
-const DB_NAME = 'insiight';
-const DB_URL = `mongodb://${process.env.insiightUser}:${process.env.insiightPw}@ds151863.mlab.com:51863/${DB_NAME}`;
+const DB_URL = `mongodb://${insiightUser}:${insiightPw}@ds151863.mlab.com:51863/${insiightDb}`;
 
 function errorResponse(callback, err) {
   console.error('END: Error response.');
@@ -41,7 +41,7 @@ exports.handler = function(event, context, callback) {
 
     const payload = JSON.parse(event.body);
     const { role } = payload;
-    const db = connection.db(DB_NAME);
+    const db = connection.db(insiightDb);
     const users = db.collection('users');
     const courses = db.collection('courses');
 

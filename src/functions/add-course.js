@@ -27,7 +27,7 @@ function successResponse(callback, res) {
  * @returns - String
  */
 function getNewJoinCode() {
-  return Math.floor((Math.random() * 9999) + 1).toString();
+  return Math.floor(1000 + Math.random() * 9000).toString();
 };
 
 exports.handler = function(event, context, callback) {

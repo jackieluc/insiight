@@ -114,7 +114,7 @@ module.exports = {
             template: './src/pages/about/about.html',
             inject: true,
             chunks: ['about'],
-            filename: './about/index.html'
+            filename: './about/index.html' 
         }),
         new HtmlWebpackPlugin({
             template: './src/pages/dashboard/dashboard.html',

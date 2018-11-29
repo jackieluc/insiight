@@ -20,3 +20,4 @@ $('document').ready(() => {
   // Bind on-click handler for selecting a role in the modal
   bindRoleSelection();
 });
+c

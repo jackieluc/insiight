@@ -33,21 +33,21 @@ function getNewJoinCode() {
 exports.handler = function(event, context, callback) {
   console.log('START: Received request.');
 
-  const payload = JSON.parse(event.body);
-  const role = payload.role;
-
   MongoClient.connect(DB_URL, { useNewUrlParser: true }, function(err, connection) {
 
     if (err) return errorResponse(callback, err);
 
     console.log('Database successfully connected.');
 
+    const payload = JSON.parse(event.body);
+    const { role } = payload;
     const db = connection.db(DB_NAME);
+    const users = db.collection('users');
     const courses = db.collection('courses');
 
     if (role === 'student') {
 
-      const joinCode = payload.courseInfo;
+      const { email, joinCode } = payload;
 
       console.log(`Looking for course code: ${joinCode} in database...`);
 
@@ -57,18 +57,33 @@ exports.handler = function(event, context, callback) {
 
         console.log(`Found course with course code ${joinCode} in the database!`);
         console.log(course);
-        
-        connection.close();
-        successResponse(callback, course);
+
+        const updates = {
+          $addToSet: {
+            courses: course.joinCode
+          }
+        };
+
+        users.updateOne({ email: email }, updates, function(err, acknowledge) {
+
+          console.log('Added course to user profile.');
+
+          connection.close();
+          successResponse(callback, course);
+        });
       });
     }
     else if (role === 'professor') {
 
-      const courseName = payload.courseInfo;
+      const { name, email, course, school } = payload;
+      const joinCode = getNewJoinCode();
+
       const courseSchema = {
-        'courseName': courseName,
-        'joinCode': getNewJoinCode(),
-        'professor': 'n/a'
+        courseName: course,
+        joinCode: joinCode,
+        professor: name,
+        email: email,
+        school: school
       };
 
       // Happy path.. does not check for duplicates
@@ -78,9 +93,20 @@ exports.handler = function(event, context, callback) {
         console.log('Added the following course to the database: ')
         // see http://mongodb.github.io/node-mongodb-native/3.1/api/Collection.html#~insertOneWriteOpResult
         console.log(result.ops[0]);
-      
-        connection.close();
-        successResponse(callback, result.ops[0]);
+
+        const updates = {
+          $addToSet: {
+            courses: joinCode
+          }
+        };
+
+        users.updateOne({ email: email }, updates, function(err, acknowledge) {
+
+          console.log('Added course to user profile.');
+
+          connection.close();
+          successResponse(callback, result.ops[0]);
+        });
       });
     }
   });

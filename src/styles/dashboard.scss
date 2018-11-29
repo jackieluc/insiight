@@ -44,3 +44,35 @@
         }
     }
 }
+
+#add-course-form {
+    padding: 15px;
+
+    label {
+        max-width: 300px;
+        margin: 1rem auto;    
+    }
+
+    input {
+        height: 32px;
+    }
+
+    .input-block {
+        text-align: center;
+    }
+
+    .course-code {
+
+        h5 {
+            margin-bottom: 2rem;
+        }
+
+        label {
+            display: block;
+        }
+
+        #course-code-input {
+            text-align: center;
+        }
+    }
+}

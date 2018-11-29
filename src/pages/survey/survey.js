@@ -63,12 +63,13 @@ function sendDataToServer(survey) {
     
 }
 
-var survey = new Survey.Model(surveyJSON);
+
 $("#surveyContainer").Survey({
     model: survey,
     onComplete: sendDataToServer
 });
 
+/*
 function getParams() {
     var url = window.location.href
       .slice(window.location.href.indexOf("?") + 1)
@@ -112,3 +113,4 @@ function getParams() {
   }
   
   init();
+  */

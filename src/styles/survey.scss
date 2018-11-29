@@ -5,8 +5,26 @@
     background-color: white;
     overflow-y: auto;
 
-    .dashboard-title {
-        padding: 1rem 2rem 0 2rem;
+h1 {
+    text-align: center;
+}
+
+div#surveyContainer{
+    width: 90vw;
+    margin: auto;
+    //border: 1px solid;
+    border-color: #3ED2CC;
+}
+
+.primary-color {
+    color: white;
+    background-color: #3ED2CC;
+    border-color: #3ED2CC;
+
+    &:hover {
+        color: white;
+        background-color: #83DFDB;
+        border-color: #83DFDB;
     }
 
     .professor-survey-options,
@@ -35,4 +53,4 @@
             }
         }
     }
-}
+}}

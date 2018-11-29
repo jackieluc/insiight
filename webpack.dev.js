@@ -128,12 +128,6 @@ module.exports = {
             filename: './professor/dashboard/index.html'
         }),
         new HtmlWebpackPlugin({
-            template: './src/pages/survey/survey.html',
-            inject: true,
-            chunks: ['survey'],
-            filename: './survey/index.html'
-        }),
-        new HtmlWebpackPlugin({
             template: './src/pages/results/results.html',
             inject: true,
             chunks: ['results'],

@@ -18,11 +18,34 @@ function initAddCourseForm() {
 function addCourseToSideBar(course) {
   $('.sidebar .courses').append(`
     <div class="course-info">
-      <p>Course Name: ${course.courseName}</p>
+      <h5>Course Name: ${course.courseName}</h5>
       <p>Professor: ${course.professor}</p>
       <p>Join Code: ${course.joinCode}</p>
     </div>
   `);
+};
+
+function getAllCourses() {
+  const user = netlifyIdentity.currentUser();
+
+  fetch('/.netlify/functions/get-courses', {
+    method: "POST",
+    body: JSON.stringify({ email: user.email })
+  })
+  .then(response => {
+    if (!response.ok) {
+      return response
+        .text()
+        .then(err => {throw(err)});
+    }
+
+    response.text().then(function(result) {
+      const { courses } = JSON.parse(result);
+
+      courses.map(course => addCourseToSideBar(course));
+    });
+  })
+  .catch(err => console.error(err));
 };
 
 // Initializes and finds out if a user has a 'student' or 'professor' role
@@ -34,7 +57,8 @@ initAddCourseForm();
 
 netlifyIdentity.on('login', () => {
 
-  // get all courses
+  // get all courses on load or refresh
+  getAllCourses();
 });
 
 // Clear the role on logout

@@ -2,32 +2,7 @@ import 'normalize.css/normalize.css';
 import '../../styles/index.scss';
 import { initRoleSelection, bindRoleSelection } from '../../utils/role-modal';
 
-function addStudentForm() {
-  $('#add-course-form').append(`
-    <div class="course-code input-block">
-      <label for="course-code">Join code</label>
-      <input id="course-code" name="courseCode" type="text" />
-    </div>
-  `);
-};
-
-function removeStudentForm() {
-  $('.course-code').remove();
-};
-
-function addProfessorForm() {
-  $('#add-course-form').append(`
-    <div class="course-name input-block">
-      <label for="course-name">Course name</label>
-      <input id="course-name" name="courseName" type="text" />
-    </div>
-  `);
-};
-
-function removeProfessorForm() {
-  $('.course-name').remove();
-};
-
+// Show the appropriate form for a user's role
 function initAddCourseForm() {
   const role = localStorage.role;
 
@@ -124,18 +99,4 @@ $('document').ready(function() {
     })
     .catch(err => console.error(err));
   });
-
-  // // Toggle student and professor forms
-  // $('select.role').on('change', () => {
-  //   let role = $('select.role').val();
-
-  //   if (role === 'professor') {
-  //     removeStudentForm();
-  //     addProfessorForm();
-  //   } 
-  //   else {
-  //     removeProfessorForm();
-  //     addStudentForm();
-  //   }
-  // });
 });

@@ -79,9 +79,9 @@ module.exports = {
       closeRoleModal();
       addRoleToDb(localStorage.getItem('role'));
 
-      // Redirect to dashboard page
+      // Redirect to 'dashboard' page
       if (!window.location.href.includes('dashboard')) {
-        window.location.href="/dashboard";
+        window.location.href = '/dashboard';
       };
     });    
   }

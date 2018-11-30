@@ -48,6 +48,15 @@ function getAllCourses() {
   .catch(err => console.error(err));
 };
 
+// Redirect the user to the home page if not logged in
+$(window).on('load', () => {
+  const isLoggedIn = netlifyIdentity.currentUser();
+
+  if (!isLoggedIn) {
+    window.location.href = '/'
+  }
+});
+
 // Initializes and finds out if a user has a 'student' or 'professor' role
 // or prompts the user to select a role (they cannot exit without choosing one)
 initRoleSelection();
@@ -56,14 +65,14 @@ initRoleSelection();
 initAddCourseForm();
 
 netlifyIdentity.on('login', () => {
-
   // get all courses on load or refresh
   getAllCourses();
 });
 
-// Clear the role on logout
+// Clear the role on logout and redirect to home page
 netlifyIdentity.on('logout', () => {
   delete localStorage.role;
+  window.location.href = '/';
 });
 
 $('document').ready(function() {

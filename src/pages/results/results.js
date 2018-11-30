@@ -16,7 +16,7 @@ var colors = [
 
 var gdata = [7, 10, 5, 12, 20];
 
-var glabels = ["Answer 1", "Answer 2", "Answer 3", "Answer 4", "Answer 5"];
+var glabels = ["Very Good", "Good", "Netural", "Bad", "Very Bad"];
 
 
 

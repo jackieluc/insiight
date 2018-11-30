@@ -14,7 +14,7 @@ $(window).on('load', () => {
     const role = localStorage.getItem('role');
 
     if (!window.location.href.includes(role)) {
-      window.location.href = `${role}/dashboard`
+      window.location.href = `/${role}/dashboard`
     }
   }
 });

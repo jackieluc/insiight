@@ -54,6 +54,7 @@ npm run preview
 │   ├── functions             # AWS Lambda functions for Netlify source files
 │   ├── pages                 # Pages that exist in the website, with sub folders being the page names
 │   ├── styles                # CSS styles, written in Sass
+│   ├── utils                 # Helper functions or utility functions (client-side JS)
 │   └── index.js              # Main Entry point for the website's home page
 ├── index.html                # Main HTML file for home page
 ├── package.json              # Package configuration. The list of 3rd party libraries and utilities
@@ -67,6 +68,9 @@ npm run preview
 
 * [Create a new page](./docs/CreateNewPage.md)
 * [Use Netlify functions](./src/functions/README.md)
+* [Using MongoDB](./src/functions/README.md#MongoDB)
+* [Database Schema](./src/functions/README.md#Database-Schema)
+* [Database Secrets/Authentication](./src/functions/README.md#Database-Secrets)
 
 ## Contributors 
 

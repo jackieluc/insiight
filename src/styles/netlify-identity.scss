@@ -3,7 +3,8 @@
     font-size: 0;
 }
 
-[data-netlify-identity-button] a {
+[data-netlify-identity-button] a,
+button.call-to-action {
     display: inline-block;
     font-size: 16px;
     height: auto;
@@ -22,7 +23,9 @@
 }
 
 [data-netlify-identity-button] a:hover,
-[data-netlify-identity-button] a:focus {
+[data-netlify-identity-button] a:focus,
+button.call-to-action:hover,
+button.call-to-action:focus {
     background-color: #83DFDB;
     text-decoration: none;
 }
@@ -93,12 +96,13 @@
 }
 
 .netlify-identity-user-details {
-    display: block;
+    display: inline-block;
+    font-size: 0;
 }
 
 .netlify-identity-user {
+    font-size: 16px;
     font-weight: 500;
     color: #2d3b41;
-    display: block;
-    margin-top: 8px;
+    display: inline-block;
 }

@@ -39,7 +39,108 @@ fetch('/.netlify/functions/add-course', {
   if (!response.ok) {
     return response.text().then(err => {throw(err)});
   }
-  response.text().then(console.log);
+  // Your response from the Netlify Function is here
+  response.text().then(function(result) {
+    // do something with the result
+  });
 })
 .catch(err => console.error(err));
 ```
+
+## MongoDB
+
+Add the following to the top of the `Netlify Function`
+
+```
+const { MongoClient } = require('mongodb');
+const { insiightDb, insiightUser, insiightPw } = process.env;
+
+const DB_URL = `mongodb://${insiightUser}:${insiightPw}@ds151863.mlab.com:51863/${insiightDb}`;
+
+// Generic Error Response from the Netlify Function
+function errorResponse(callback, err) {
+  console.error('END: Error response.');
+  console.error(err);
+
+  callback(null, {
+    statusCode: 500,
+    body: JSON.stringify({ error: err })
+  });
+};
+
+// Generic Success Response from the Netlify Function
+function successResponse(callback, res) {
+  console.log('END: Success response.');
+
+  callback(null, {
+    statusCode: 200,
+    body: JSON.stringify(res)
+  });
+};
+```
+
+Add this inside the `exports.handler` function:
+
+```
+MongoClient.connect(DB_URL, { useNewUrlParser: true }, function(err, connection) {
+
+  if (err) return errorResponse(callback, err);
+
+  console.log('Database successfully connected.');
+
+  const db = connection.db(DB_NAME); // Specify the database we are connecting to
+  const courses = db.collection('courses'); // Specify the collection we want
+
+  connection.close(); // Close the connection when done
+  successResponse(callback, result.ops[0]); // Return the result of the operation,  find out more about what the result.ops[0] is:  http://mongodb.github.io/node-mongodb-native/3.1/api/Collection.html#~insertOneWriteOpResult
+}
+```
+
+## Database Schema
+
+In our MongoDB hosted on [mlab](https://www.mlab.com/), we have a database that has the following collections: 
+- users
+- courses
+- surveys
+- discussions
+
+### User Schema
+```
+const user = {
+  name: 'name of the user',
+  email: 'ID - email associated with the account',
+  role: 'student' or 'professor',
+  courses: [ 'array of course join codes' ],
+  surveys: [ 'array of completed surveys' ]
+}
+```
+
+### Course Schema
+```
+const user = {
+  courseName: 'name of the course',
+  joinCode: 'course join code',
+  professor: 'professor's name',
+  email: 'professor's email',
+  school: 'the institution in which the course is offered'
+}
+```
+
+### Survey Schema
+```
+// TODO
+```
+
+### Discussion Schema
+```
+// TODO
+```
+
+## Database Secrets
+
+In order to successfully authenticate to the database and use the local Netlify Functions, please run the following to set local environment variables:
+```
+export insiightDb={ database name } ; export insiightUser={ database username } ; export insiightPw={ database password }
+```
+
+Replace everything in the curly braces, including the curly braces. These values can be obtained by logging into [mlab](https://www.mlab.com/) or from Netlify's [build environment variables](https://www.netlify.com/docs/continuous-deployment/#build-environment-variables).

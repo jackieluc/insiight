@@ -1,6 +1,5 @@
 import 'normalize.css/normalize.css';
-import '../../styles/results.scss';
-
+import '../../styles/index.scss';
 
 $('document').ready(() => {
     

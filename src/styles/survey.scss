@@ -1,51 +1,11 @@
-html, body {
-    height: 100%;
+#surveyContainer{
     width: 100%;
-    font-size: 16px;
-    font-family: 'Roboto', sans-serif;
-    font-weight: regular;
-}
-
-h1 {
-    text-align: center;
-}
-
-div#surveyContainer{
-    width: 90vw;
     margin: auto;
     //border: 1px solid;
     border-color: #3ED2CC;
-}
 
-.primary-color {
-    color: white;
-    background-color: #3ED2CC;
-    border-color: #3ED2CC;
-
-    &:hover {
-        color: white;
-        background-color: #83DFDB;
-        border-color: #83DFDB;
+    .sv_main {
+        font-size: 1rem;
     }
 }
 
-.navbar-nav {
-    align-items: flex-end;
-
-    @media (min-width: 1024px) {
-        align-items: center;
-    }
-
-    .nav-item {
-        margin-left: 25px;
-
-        .btn {
-            color: white;
-            padding: 8px 15px;
-
-            &:hover {
-                color: white;
-            }
-        }
-    }
-}

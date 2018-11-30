@@ -1,5 +1,5 @@
 import 'normalize.css/normalize.css';
-import '../../styles/survey.scss';
+import '../../styles/index.scss';
 
 
 $('document').ready(() => {
@@ -49,7 +49,7 @@ var surveyJSON = {questionTitleTemplate : "{no}. {title}",
         }
     ]
 }],
-completeText:"Submit"
+completeText:"Submit survey"
 }
 var survey = new Survey.Model(surveyJSON);
 survey.surveyPostId = '72167288-14c7-4f0e-af17-6c4955db4e9a';

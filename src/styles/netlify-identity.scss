@@ -4,7 +4,8 @@
 }
 
 [data-netlify-identity-button] a,
-button.call-to-action {
+button.call-to-action,
+input[type="button"].sv_complete_btn, {
     display: inline-block;
     font-size: 16px;
     height: auto;

@@ -42,7 +42,9 @@ function getAllCourses() {
     response.text().then(function(result) {
       const { courses } = JSON.parse(result);
 
-      courses.map(course => addCourseToSideBar(course));
+      if (courses) {
+        courses.map(course => addCourseToSideBar(course));
+      };
     });
   })
   .catch(err => console.error(err));

@@ -54,35 +54,36 @@ function checkRoleFromDb() {
     
       // Prompt the user to get their role
       // or set the role from the DB
-      if (!payload) openRoleModal();
+      if (!payload || !payload.role) openRoleModal();
       else localStorage.setItem('role', payload.role);
     });
   })
   .catch(err => console.error(err));
 };
 
-module.exports = {
-  initRoleSelection: function() {
-    netlifyIdentity.on('login', (user) => {
-      setTimeout(function() { 
-        $('.netlify-identity-item.netlify-identity-user-details span').text('Hi, ' + user.user_metadata.full_name);
-      }, 20);
-    
-      if (!Boolean(localStorage.getItem('role'))) {        
-        checkRoleFromDb();
-      };
-    });
-  },
-  bindRoleSelection: function() {
-    $('#pick-role-modal button.call-to-action').on('click', (event) => {
-      localStorage.setItem('role', event.target.value);
-      closeRoleModal();
-      addRoleToDb(localStorage.getItem('role'));
-
-      // Redirect to 'dashboard' page
-      if (!window.location.href.includes('dashboard')) {
-        window.location.href = '/dashboard';
-      };
-    });    
-  }
+function initRoleSelection() {
+  netlifyIdentity.on('login', (user) => {
+    setTimeout(function() { 
+      $('.netlify-identity-item.netlify-identity-user-details span').text('Hi, ' + user.user_metadata.full_name);
+    }, 20);
+  
+    if (!Boolean(localStorage.getItem('role'))) {        
+      checkRoleFromDb();
+    };
+  });
 };
+
+function bindRoleSelection() {
+  $('#pick-role-modal button.call-to-action').on('click', (event) => {
+    localStorage.setItem('role', event.target.value);
+    closeRoleModal();
+    addRoleToDb(localStorage.getItem('role'));
+
+    // Redirect to 'dashboard' page
+    if (!window.location.href.includes('dashboard')) {
+      window.location.href = '/dashboard';
+    };
+  });    
+}
+
+module.exports = { initRoleSelection, bindRoleSelection };

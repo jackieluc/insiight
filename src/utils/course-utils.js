@@ -1,23 +1,11 @@
-// Show the appropriate form for a user's role
-function initAddCourseForm() {
-  const role = localStorage.role;
-
-  if (role === 'student') {
-    $('.professor-form').remove();
-  }
-  else if (role === 'professor') {
-    $('.student-form').remove();
-  }
-};
-
 // Add course to list in sidebar
 function addCourseToSideBar(course) {
   $('.sidebar .courses').append(`
-    <div class="course-info">
-      <h5>Course Name: ${course.courseName}</h5>
-      <p>Professor: ${course.professor}</p>
-      <p>Join Code: ${course.joinCode}</p>
-    </div>
+    <button class="course-info">
+        <h5>Course Name: ${course.courseName}</h5>
+        <p>Professor: ${course.professor}</p>
+        <p>Join Code: ${course.joinCode}</p>
+    </button>
   `);
 };
 
@@ -40,6 +28,10 @@ function getAllCourses() {
 
       if (courses) {
         courses.map(course => addCourseToSideBar(course));
+
+        // Bind on-click handler for when a user selects a course in the sidebar
+        $('.courses .course-info').on('click', function(event) {
+        }); 
       };
     });
   })
@@ -50,7 +42,7 @@ function getAllCourses() {
 function bindAddCourseButton() {
   $('.add-course-button').on('click', function() {
     const user = netlifyIdentity.currentUser();
-    const role = localStorage.role;
+    const role = localStorage.getItem('role');
     const form = $(`#add-course-form .${role}-form`);
     
     let courseInfo = {};
@@ -101,4 +93,8 @@ function bindAddCourseButton() {
   });
 };
 
-module.exports = { initAddCourseForm, addCourseToSideBar, getAllCourses, bindAddCourseButton };
+module.exports = {
+  addCourseToSideBar,
+  getAllCourses,
+  bindAddCourseButton,
+};

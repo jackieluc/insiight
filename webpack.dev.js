@@ -13,9 +13,13 @@ module.exports = {
     devtool: 'eval-cheap-module-source-map',
     entry: {
         home: './src/index.js',
-        dashboard: './src/pages/dashboard/dashboard.js',
+        dashboard: './src/pages/student/dashboard.js',
+        dashboard: './src/pages/professor/dashboard.js',
         survey: './src/pages/survey/survey.js',
         results:'./src/pages/results/results.js'
+    },
+    output: {
+        publicPath: '/'
     },
     devServer: {
         port: 5000,
@@ -112,10 +116,16 @@ module.exports = {
             filename: './about/index.html' 
         }),
         new HtmlWebpackPlugin({
-            template: './src/pages/dashboard/dashboard.html',
+            template: './src/pages/student/dashboard.html',
             inject: true,
             chunks: ['dashboard'],
-            filename: './dashboard/index.html'
+            filename: './student/dashboard/index.html'
+        }),
+        new HtmlWebpackPlugin({
+            template: './src/pages/professor/dashboard.html',
+            inject: true,
+            chunks: ['dashboard'],
+            filename: './professor/dashboard/index.html'
         }),
         new HtmlWebpackPlugin({
             template: './src/pages/survey/survey.html',

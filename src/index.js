@@ -17,6 +17,11 @@ $(window).on('load', () => {
 initRoleSelection();
 
 netlifyIdentity.on('login', () => {
+  
+  // Change the navigation menu URL to include the role
+  const role = localStorage.getItem('role');
+  $('nav .dashboard-link .nav-link').attr('href', `/${role}/dashboard`);
+
   // Add 'dashboard' page back in the navigation menu
   $('nav .dashboard-link').show();
 });

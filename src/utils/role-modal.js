@@ -77,11 +77,13 @@ function bindRoleSelection() {
   $('#pick-role-modal button.call-to-action').on('click', (event) => {
     localStorage.setItem('role', event.target.value);
     closeRoleModal();
-    addRoleToDb(localStorage.getItem('role'));
 
-    // Redirect to 'dashboard' page
+    const role = localStorage.getItem('role');
+    addRoleToDb(role);
+
+    // Redirect to 'dashboard' page based on their role
     if (!window.location.href.includes('dashboard')) {
-      window.location.href = '/dashboard';
+      window.location.href = `${role}/dashboard`;
     };
   });    
 }

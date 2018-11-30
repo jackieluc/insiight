@@ -1,11 +1,24 @@
 #surveyContainer{
     width: 100%;
-    margin: auto;
-    //border: 1px solid;
-    border-color: #3ED2CC;
+    max-height: 100%;
+    overflow-y: auto;
+    background-color: white;
 
     .sv_main {
         font-size: 1rem;
+
+        .sv_body {
+            border-top: 0;
+            padding: 0;
+
+            .sv_q {
+                padding: 0.5rem 3rem;
+            }
+
+            .sv_complete_btn {
+                margin-right: 15px;
+            }
+        }
     }
 }
 

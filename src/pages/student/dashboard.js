@@ -10,6 +10,13 @@ $(window).on('load', () => {
   if (!isLoggedIn) {
     window.location.href = '/'
   }
+  else if (isLoggedIn) {
+    const role = localStorage.getItem('role');
+
+    if (!window.location.href.includes(role)) {
+      window.location.href = `${role}/dashboard`
+    }
+  }
 });
 
 // Initializes and finds out if a user has a 'student' or 'professor' role
@@ -24,7 +31,7 @@ netlifyIdentity.on('login', () => {
 
   // Change the navigation menu URL to include the role
   $('nav .dashboard-link .nav-link').attr('href', `/${role}/dashboard`);
-  
+
 });
 
 // Clear the role on logout and redirect to home page

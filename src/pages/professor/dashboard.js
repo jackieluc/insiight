@@ -10,6 +10,13 @@ $(window).on('load', () => {
   if (!isLoggedIn) {
     window.location.href = '/'
   }
+  else if (isLoggedIn) {
+    const role = localStorage.getItem('role');
+
+    if (!window.location.href.includes(role)) {
+      window.location.href = `${role}/dashboard`
+    }
+  }
 });
 
 // Initializes and finds out if a user has a 'student' or 'professor' role

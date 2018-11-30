@@ -13,7 +13,6 @@ module.exports = {
     entry: {
         home: './src/index.js',
         dashboard: './src/pages/dashboard/dashboard.js',
-        register: './src/pages/register/register.js',
         survey: './src/pages/survey/survey.js',
         results:'./src/pages/results/results.js'
     },
@@ -104,12 +103,6 @@ module.exports = {
             inject: true,
             chunks: ['home'],
             filename: './index.html'
-        }),
-        new HtmlWebpackPlugin({
-            template: './src/pages/register/register.html',
-            inject: true,
-            chunks: ['register'],
-            filename: './register/index.html'
         }),
         new HtmlWebpackPlugin({
             template: './src/pages/about/about.html',

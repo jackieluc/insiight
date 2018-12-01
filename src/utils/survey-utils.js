@@ -51,21 +51,44 @@ const surveySchema = {
   completeText:"Submit survey"
 };
 
-function submitSurvey(survey) {
-  console.log(JSON.stringify(survey.data));
+function submitSurvey(survey, joinCode) {
+  const email = netlifyIdentity.currentUser().email;
+  const mySurvey = {
+    email: email,
+    joinCode: joinCode,
+    survey: survey.data
+  };
+
+  fetch('/.netlify/functions/submit-survey', {
+    method: "POST",
+    body: JSON.stringify(mySurvey)
+  })
+  .then(response => {
+    if (!response.ok) {
+      return response
+        .text()
+        .then(err => {throw(err)});
+    };
+
+    response.text().then(function(result) {
+      const resultJson = JSON.parse(result);
+      console.log(resultJson.response);
+    });
+  })
+  .catch(err => console.error(err));
 };
 
-function initSurvey() {
+function initSurvey(joinCode) {
   const survey = new Survey.Model(surveySchema);
   survey.surveyPostId = '72167288-14c7-4f0e-af17-6c4955db4e9a';
   survey.surveyShowDataSaving = false;
 
-  $('.survey-container').empty();
-
-  $('.survey-container').Survey({
-      model: survey,
-      onComplete: submitSurvey
+  survey.onComplete.add(function (survey) {
+    submitSurvey(survey, joinCode);
   });
+
+  $('.survey-container').empty();
+  $('.survey-container').Survey({ model: survey });
 };
 
 function addSurvey(surveyInfo) {
@@ -85,7 +108,7 @@ function addSurvey(surveyInfo) {
     ...surveyInfo,
     enabled: 'true',
     schema: schema
-  }
+  };
 
   fetch('/.netlify/functions/add-survey', {
     method: "POST",
@@ -96,7 +119,7 @@ function addSurvey(surveyInfo) {
       return response
         .text()
         .then(err => {throw(err)});
-    }
+    };
 
     response.text().then(function(result) {
       const resultJson = JSON.parse(result);
@@ -123,18 +146,18 @@ function getSurvey(surveyInfo) {
       return response
         .text()
         .then(err => {throw(err)});
-    }
+    };
 
     return response.json();
   })
   .then(survey => {      
     if (survey.result === 'inProgress') {
-      initSurvey();
+      initSurvey(surveyInfo.joinCode);
       return true;
-    }
-    else {
-      return false;
-    }
+    };
+
+    return false;
+
   })
   .catch(err => console.error(err));
 };

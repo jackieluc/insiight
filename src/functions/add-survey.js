@@ -36,13 +36,8 @@ exports.handler = function(event, context, callback) {
     const db = connection.db(insiightDb);
     const surveys = db.collection('surveys');
 
-    const survey = {
-      ...payload,
-      enabled: true
-    };
-
     // // Happy path
-    surveys.insertOne(survey, function(err, result) {
+    surveys.insertOne(payload, function(err, result) {
       if (err) errorResponse(callback, err);
       
       console.log('Added the following user to the database: ')

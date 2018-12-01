@@ -23,7 +23,7 @@ const surveySchema = {
         name: "How was Class?",
         colCount: 5,
         isRequired: true,
-        choices: ["V.Useless","Useless","Neither","Helpful","V.Helpful"]
+        choices: ["Very Useless","Useless","Neither","Helpful","Very Helpful"]
       },
       {
         type:"radiogroup",
@@ -68,9 +68,46 @@ function initSurvey() {
   });
 };
 
-function sendSurvey(surveyInfo) {
+function addSurvey(surveyInfo) {
 
-  fetch('/.netlify/functions/send-survey', {
+  let schema = {};
+
+  // Build the schema, so we can access the counter for survey results
+  // Example: schema['How are you today?']['Bad'] => '0'
+  surveySchema.pages[0].elements.forEach(function(question) {
+    const aQuestion = schema[question.name] = {};
+    question.choices.forEach(function(choice) {
+      aQuestion[choice] = '0';
+    });
+  });
+
+  const survey = {
+    ...surveyInfo,
+    schema: schema
+  }
+
+  fetch('/.netlify/functions/add-survey', {
+    method: "POST",
+    body: JSON.stringify(survey)
+  })
+  .then(response => {
+    if (!response.ok) {
+      return response
+        .text()
+        .then(err => {throw(err)});
+    }
+
+    response.text().then(function(result) {
+      const resultJson = JSON.parse(result);
+      console.log(resultJson.response);
+    });
+  })
+  .catch(err => console.error(err));
+};
+
+function getSurvey(surveyInfo) {
+
+  fetch('/.netlify/functions/get-survey', {
     method: "POST",
     body: JSON.stringify(surveyInfo)
   })
@@ -84,9 +121,15 @@ function sendSurvey(surveyInfo) {
     response.text().then(function(result) {
       const resultJson = JSON.parse(result);
       console.log(resultJson);
+
+      // if (enabled / moment.isBefore(expireDate))
+      // initSurvey
+      // return true
+      // else 
+      // return false
     });
   })
   .catch(err => console.error(err));
 };
 
-module.exports = { initSurvey, surveySchema, sendSurvey }
+module.exports = { initSurvey, surveySchema, addSurvey, getSurvey }

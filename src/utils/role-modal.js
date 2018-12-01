@@ -55,7 +55,10 @@ function checkRoleFromDb() {
       // Prompt the user to get their role
       // or set the role from the DB
       if (!payload || !payload.role) openRoleModal();
-      else localStorage.setItem('role', payload.role);
+      else {
+        localStorage.setItem('role', payload.role);
+        location.reload();
+      }
     });
   })
   .catch(err => console.error(err));
@@ -66,10 +69,6 @@ function initRoleSelection() {
     setTimeout(function() { 
       $('.netlify-identity-item.netlify-identity-user-details span').text('Hi, ' + user.user_metadata.full_name);
     }, 20);
-  
-    if (!Boolean(localStorage.getItem('role'))) {        
-      checkRoleFromDb();
-    };
   });
 };
 
@@ -88,4 +87,4 @@ function bindRoleSelection() {
   });    
 }
 
-module.exports = { initRoleSelection, bindRoleSelection };
+module.exports = { initRoleSelection, bindRoleSelection, checkRoleFromDb };

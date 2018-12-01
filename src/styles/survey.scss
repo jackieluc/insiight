@@ -45,6 +45,12 @@
                 .sv_complete_btn {
                     margin-right: 15px;
                 }
+
+                &.sv_completed_page {
+                    h3 {
+                        margin-top: 40vh;
+                    }
+                }
             }
         }
     }

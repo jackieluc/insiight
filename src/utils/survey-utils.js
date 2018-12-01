@@ -51,21 +51,20 @@ const surveySchema = {
   completeText:"Submit survey"
 };
 
-function sendDataToServer(survey) {
-  //send Ajax request to your web server.
-  alert("The results are:" + JSON.stringify(survey.data));
+function submitSurvey(survey) {
+  console.log(JSON.stringify(survey.data));
 };
 
 function initSurvey() {
   const survey = new Survey.Model(surveySchema);
   survey.surveyPostId = '72167288-14c7-4f0e-af17-6c4955db4e9a';
-  survey.surveyShowDataSaving = true;
+  survey.surveyShowDataSaving = false;
 
   $('.survey-container').empty();
 
   $('.survey-container').Survey({
       model: survey,
-      onComplete: sendDataToServer
+      onComplete: submitSurvey
   });
 };
 

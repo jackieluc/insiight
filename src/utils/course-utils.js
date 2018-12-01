@@ -16,12 +16,65 @@ function addCourseToSideBar(course) {
   `);
 };
 
+function bindProfessorSurvey(surveySelectElement, surveyInfo) {
+  const { courseName, joinCode, expireTime } = surveyInfo;
+  const surveyExpireTime = localStorage.getItem(`survey-${joinCode}`);
+
+  const surveyIsExpired = Moment().isAfter(surveyExpireTime);
+
+  if (surveyIsExpired || !surveyExpireTime) {
+    surveySelectElement.append(`
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="card survey-card">
+            <div class="card-body">
+              <h5 class="card-title">Send a survey to ${courseName}</h5>
+              <p class="card-text">Start receiving feedback from your students in your course by sending them a survey!</p>
+              <button class="survey-cta cta">Send survey</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    `);
+  }
+  else {
+    surveySelectElement.append(`
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="card survey-card">
+            <div class="card-body">
+              <h5 class="card-title">Survey currently in progress for ${courseName}</h5>
+              <p class="card-text">Please wait until ${surveyExpireTime.format('MMMM Do YYYY, h:mm:ss a')} to view the results of the survey.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    `);
+  }
+
+  $('.survey-cta').on('click', function(event) {
+
+    // Enable the survey on the back-end
+    sendSurvey(surveyInfo);
+
+    $('.survey-card').empty();
+    $('.survey-card').append(`
+      <div class="card-body">
+        <h5 class="card-title">Survey successfully sent!</h5>
+        <p class="card-text">Your survey results will appear on ${expireTime.format('MMMM Do YYYY, h:mm:ss a')}.</p>
+      </div>
+    `);
+
+    localStorage.setItem(`survey-${joinCode}`, expireTime);
+  });
+}
+
 function bindCourseSelection(sendSurvey) {
   $('.courses .course-info').on('click', function(event) {
     const role = localStorage.getItem('role');
-    const surveyOptions = $(`.${role}-survey-options`);
+    const surveySelectElement = $(`.${role}-survey-options`);
 
-    surveyOptions.empty();
+    surveySelectElement.empty();
 
     const course = $(event.target).closest('.course-info');
     const courseName = course.find('[data-course]').data('course');
@@ -39,55 +92,7 @@ function bindCourseSelection(sendSurvey) {
     $('.dashboard-title').text(`Dashboard for ${courseName}`)
 
     if (role === 'professor') {
-      const surveyExpireTime = localStorage.getItem(`survey-${joinCode}`);
-
-      const surveyIsExpired = Moment().isAfter(surveyExpireTime);
-
-      if (surveyIsExpired || !surveyExpireTime) {
-        surveyOptions.append(`
-          <div class="row">
-            <div class="col-sm-4">
-              <div class="card survey-card">
-                <div class="card-body">
-                  <h5 class="card-title">Send a survey to ${courseName}</h5>
-                  <p class="card-text">Start receiving feedback from your students in your course by sending them a survey!</p>
-                  <button class="survey-cta cta">Send survey</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        `);
-      }
-      else {
-        surveyOptions.append(`
-          <div class="row">
-            <div class="col-sm-4">
-              <div class="card survey-card">
-                <div class="card-body">
-                  <h5 class="card-title">Survey currently in progress for ${courseName}</h5>
-                  <p class="card-text">Please wait until ${surveyExpireTime.format('MMMM Do YYYY, h:mm:ss a')} to view the results of the survey.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        `);
-      }
-
-      $('.survey-cta').on('click', function(event) {
-
-        // Enable the survey on the back-end
-        sendSurvey(surveyInfo);
-
-        $('.survey-card').empty();
-        $('.survey-card').append(`
-          <div class="card-body">
-            <h5 class="card-title">Survey successfully sent!</h5>
-            <p class="card-text">Your survey results will appear on ${surveyInfo.expireTime.format('MMMM Do YYYY, h:mm:ss a')}.</p>
-          </div>
-        `);
-
-        localStorage.setItem(`survey-${joinCode}`, surveyInfo.expireTime);
-      });
+      bindProfessorSurvey(surveySelectElement, surveyInfo);
     }
   }); 
 }

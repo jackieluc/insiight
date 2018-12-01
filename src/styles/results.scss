@@ -1,0 +1,25 @@
+#question-containers{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    //border: 1px black solid;
+    //margin: 0 auto;
+}
+
+.qcontainer{
+    width: 25vw;
+    margin: auto;
+}
+
+
+.primary-color {
+    color: white;
+    background-color: #3ED2CC;
+    border-color: #3ED2CC;
+
+    &:hover {
+        color: white;
+        background-color: #83DFDB;
+        border-color: #83DFDB;
+    }
+}

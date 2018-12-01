@@ -1,6 +1,6 @@
 import 'normalize.css/normalize.css';
 import './styles/index.scss';
-import { initRoleSelection, bindRoleSelection } from '../src/utils/role-modal';
+import { initRoleSelection, bindRoleSelection, checkRoleFromDb } from '../src/utils/role-modal';
 
 
 // Hides the 'dashboard' page when a user is not logged in
@@ -17,13 +17,23 @@ $(window).on('load', () => {
 initRoleSelection();
 
 netlifyIdentity.on('login', () => {
-  // Add 'dashboard' page back in the navigation menu
-  $('nav .dashboard-link').show();
+  
+  // Change the navigation menu URL to include the role
+  const role = localStorage.getItem('role');
+  if (!Boolean(role)) {
+    checkRoleFromDb();
+  }
+  else {
+    $('nav .dashboard-link .nav-link').attr('href', `/${role}/dashboard`);
+    // Add 'dashboard' page back in the navigation menu
+    $('nav .dashboard-link').show();
+  }
 });
 
 // Clear the role on logout
 netlifyIdentity.on('logout', () => {
   delete localStorage.role;
+  $('nav .dashboard-link').hide();
 });
 
 // When the HTML document has finished loading, run the following callback function

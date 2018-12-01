@@ -1,7 +1,8 @@
 .dashboard-page {
 
     height: calc(100vh - 58px); // remove height from navbar
-    background-color: #CCC;
+    background-color: white;
+    display: flex;
 
     .sidebar {
         height: 100%;
@@ -16,7 +17,21 @@
         }
 
         .course-info {
+            width: 100%;
             background: paleturquoise;
+            margin: 0 0 10px 0;
+
+            &:hover {
+                cursor: pointer;
+            }
+            &:focus,
+            &:checked {
+                background-color: #83DFDB;
+            }
+            
+            h5 {
+                margin-top: 0.5rem;
+            }
         }
 
         .bottom-section {
@@ -41,6 +56,15 @@
                     width: 48px;
                 }
             }
+        }
+    }
+
+    .discussion-thread {
+        width: 30%;
+        border-left: 1px solid #AAA;
+
+        h3 {
+            margin: 1rem 2rem;
         }
     }
 }

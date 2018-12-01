@@ -1,0 +1,57 @@
+.survey {
+    // display: flex;
+    width: 60%;
+    height: 100%;
+    background-color: white;
+    overflow-y: auto;
+
+    .dashboard-title {
+        padding: 1rem 2rem 0 2rem;
+    }
+
+    .professor-survey-options,
+    .student-survey-options {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    
+        .row {
+            width: 100%;
+            justify-content: center;
+        }
+    }
+
+    .survey-container {
+        width: 100%;
+        max-height: 100%;
+        overflow-y: auto;
+
+        .sv_main {
+            font-size: 1rem;
+
+            .sv_body {
+                border-top: 0;
+                padding: 0;
+
+                .sv_page_title {
+                    padding: 1rem 3rem 0 3rem;
+                }
+
+                .sv_q {
+                    padding: 0.5rem 3rem;
+                }
+
+                .sv_complete_btn {
+                    margin-right: 15px;
+                }
+
+                &.sv_completed_page {
+                    h3 {
+                        margin-top: 40vh;
+                    }
+                }
+            }
+        }
+    }
+}

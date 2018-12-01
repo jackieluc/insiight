@@ -12,12 +12,14 @@ module.exports = {
     devtool: 'source-map',
     entry: {
         home: './src/index.js',
-        dashboard: './src/pages/dashboard/dashboard.js',
-        register: './src/pages/register/register.js'
+        studentDashboard: './src/pages/student/dashboard.js',
+        professorDashboard: './src/pages/professor/dashboard.js',
+        survey: './src/pages/survey/survey.js',
+        results:'./src/pages/results/results.js'
     },
     output: {
         filename: '[name].[hash:20].js',
-        publicPath: "/",
+        publicPath: '/',
         path: buildPath
     },
     module: {
@@ -104,23 +106,36 @@ module.exports = {
             filename: './index.html'
         }),
         new HtmlWebpackPlugin({
-            template: './src/pages/register/register.html',
-            inject: true,
-            chunks: ['register'],
-            filename: './register/index.html'
-        }),
-        new HtmlWebpackPlugin({
             template: './src/pages/about/about.html',
             inject: true,
             chunks: ['about'],
             filename: './about/index.html'
         }),
         new HtmlWebpackPlugin({
-            template: './src/pages/dashboard/dashboard.html',
+            template: './src/pages/student/dashboard.html',
             inject: true,
-            chunks: ['dashboard'],
-            filename: './dashboard/index.html'
+            chunks: ['studentDashboard'],
+            filename: './student/dashboard/index.html'
         }),
+        new HtmlWebpackPlugin({
+            template: './src/pages/professor/dashboard.html',
+            inject: true,
+            chunks: ['professorDashboard'],
+            filename: './professor/dashboard/index.html'
+        }),
+        new HtmlWebpackPlugin({
+            template: './src/pages/survey/survey.html',
+            inject: true,
+            chunks: ['survey'],
+            filename: './survey/index.html'
+        }),
+        new HtmlWebpackPlugin({
+            template: './src/pages/results/results.html',
+            inject: true,
+            chunks: ['results'],
+            filename: './results/index.html'
+        }),
+        
         new CleanWebpackPlugin(buildPath),
         new FaviconsWebpackPlugin({
             // Your source logo

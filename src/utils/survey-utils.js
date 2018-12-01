@@ -51,18 +51,19 @@ const surveySchema = {
   completeText:"Submit survey"
 };
 
-const survey = new Survey.Model(surveySchema);
-survey.surveyPostId = '72167288-14c7-4f0e-af17-6c4955db4e9a';
-survey.surveyShowDataSaving = true;
-
 function sendDataToServer(survey) {
-    //send Ajax request to your web server.
-    alert("The results are:" + JSON.stringify(survey.data));
-    
+  //send Ajax request to your web server.
+  alert("The results are:" + JSON.stringify(survey.data));
 };
 
 function initSurvey() {
-  $(".survey-container").Survey({
+  const survey = new Survey.Model(surveySchema);
+  survey.surveyPostId = '72167288-14c7-4f0e-af17-6c4955db4e9a';
+  survey.surveyShowDataSaving = true;
+
+  $('.survey-container').empty();
+
+  $('.survey-container').Survey({
       model: survey,
       onComplete: sendDataToServer
   });
@@ -83,6 +84,7 @@ function addSurvey(surveyInfo) {
 
   const survey = {
     ...surveyInfo,
+    enabled: 'true',
     schema: schema
   }
 
@@ -107,7 +109,7 @@ function addSurvey(surveyInfo) {
 
 function getSurvey(surveyInfo) {
 
-  fetch('/.netlify/functions/get-survey', {
+  return fetch('/.netlify/functions/get-survey', {
     method: "POST",
     body: JSON.stringify(surveyInfo)
   })
@@ -118,16 +120,16 @@ function getSurvey(surveyInfo) {
         .then(err => {throw(err)});
     }
 
-    response.text().then(function(result) {
-      const resultJson = JSON.parse(result);
-      console.log(resultJson);
-
-      // if (enabled / moment.isBefore(expireDate))
-      // initSurvey
-      // return true
-      // else 
-      // return false
-    });
+    return response.json();
+  })
+  .then(survey => {      
+    if (survey.result === 'inProgress') {
+      initSurvey();
+      return true;
+    }
+    else {
+      return false;
+    }
   })
   .catch(err => console.error(err));
 };

@@ -73,57 +73,29 @@ function bindProfessorSurvey(surveySelectElement, surveyFunction, surveyInfo) {
   });
 };
 
-function bindStudentSurvey(surveySelectElement, surveyFunction, surveyInfo) {
+function bindStudentSurvey(surveyFunction, surveyInfo) {
   
-  const { courseName } = surveyInfo;
-
-  const survey = surveyFunction(surveyInfo);
-
-  if (surveyExists) {
-    surveySelectElement.append(`
-      <div class="row">
-        <div class="col-sm-4">
-          <div class="card survey-card">
-            <div class="card-body">
-              <h5 class="card-title">New Survey is available for ${courseName}!</h5>
-              <p class="card-text">Improve your learning experience by providing feedback to your professor.</p>
-              <button class="survey-cta cta">Start survey</button>
+  surveyFunction(surveyInfo).then(surveyInProgress => {
+    if (!surveyInProgress) {  
+      $('.survey-container').append(`
+        <div class="row">
+          <div class="col-sm-4">
+            <div class="card survey-card">
+              <div class="card-body">
+                <h5 class="card-title">There are no surveys at this time.</h5>
+                <p class="card-text">Please wait for your professor to send out a survey.</p>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    `);
-  }
-  else {
-    surveySelectElement.append(`
-      <div class="row">
-        <div class="col-sm-4">
-          <div class="card survey-card">
-            <div class="card-body">
-              <h5 class="card-title">There are no surveys at this time.</h5>
-              <p class="card-text">Please wait for your professor to send out a survey.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    `);
-  };
-
-  $('.survey-cta').on('click', function(event) {
-
-    // Enable the survey on the back-end
-    surveyFunction(surveyInfo);
-
-    $('.survey-card').empty();
+      `);
+    };
   });
 };
 
 function bindCourseSelection(surveyFunction) {
   $('.courses .course-info').on('click', function(event) {
     const role = localStorage.getItem('role');
-    const surveySelectElement = $(`.${role}-survey-options`);
-
-    surveySelectElement.empty();
 
     const course = $(event.target).closest('.course-info');
     const courseName = course.find('[data-course]').data('course');
@@ -141,10 +113,13 @@ function bindCourseSelection(surveyFunction) {
     $('.dashboard-title').text(`Dashboard for ${courseName}`)
 
     if (role === 'professor') {
+      const surveySelectElement = $(`professor-survey-options`);
+      surveySelectElement.empty();
+      
       bindProfessorSurvey(surveySelectElement, surveyFunction, surveyInfo);
     }
     else if (role === 'student') {
-      bindStudentSurvey(surveySelectElement, surveyFunction, surveyInfo);
+      bindStudentSurvey(surveyFunction, surveyInfo);
     }
   }); 
 }

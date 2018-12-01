@@ -108,7 +108,7 @@ function bindCourseSelection(surveyFunction) {
       professor: professor,
       joinCode: joinCode,
       createdTime: Moment.now(),
-      expireTime: Moment().add(7, 'days')
+      expireTime: Moment().add(1, 'day')
     }
 
     $('.dashboard-title').text(`Survey for ${courseName}`)

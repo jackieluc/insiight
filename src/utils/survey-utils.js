@@ -107,10 +107,16 @@ function addSurvey(surveyInfo) {
 };
 
 function getSurvey(surveyInfo) {
+  const email = netlifyIdentity.currentUser().email;
+
+  const mySurvey = {
+    email: email,
+    ...surveyInfo
+  };
 
   return fetch('/.netlify/functions/get-survey', {
     method: "POST",
-    body: JSON.stringify(surveyInfo)
+    body: JSON.stringify(mySurvey)
   })
   .then(response => {
     if (!response.ok) {

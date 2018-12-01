@@ -1,13 +1,65 @@
 // Add course to list in sidebar
 function addCourseToSideBar(course) {
+  const { courseName, professor, joinCode } = course;
+  const role = localStorage.getItem('role');
+  let includeProfessorName = '';
+  
+  if (role === 'student') {
+    includeProfessorName = `<p data-professor="${professor}">Professor: ${professor}</p>`
+  };
+
   $('.sidebar .courses').append(`
     <button class="course-info">
-        <h5>Course Name: ${course.courseName}</h5>
-        <p>Professor: ${course.professor}</p>
-        <p>Join Code: ${course.joinCode}</p>
+        <h5 data-course="${courseName}">Course Name: ${courseName}</h5>
+        ${includeProfessorName}
+        <p data-code="${joinCode}">Join Code: ${joinCode}</p>
     </button>
   `);
 };
+
+function bindCourseSelection() {
+  $('.courses .course-info').on('click', function(event) {
+    const role = localStorage.getItem('role');
+    const surveyOptions = $(`.${role}-survey-options`);
+
+    surveyOptions.empty();
+
+    const course = $(event.target).closest('.course-info');
+    const courseName = course.find('[data-course]').data('course');
+    const joinCode = course.find('[data-code]').data('code');
+
+    $('.dashboard-title').text(`Dashboard for ${courseName}`)
+    
+    if (role === 'professor') {
+      surveyOptions.append(`
+        <div class="row">
+          <div class="col-sm-4">
+            <div class="card survey-card">
+              <div class="card-body">
+                <h5 class="card-title">Send a survey to ${courseName}</h5>
+                <p class="card-text">Start receiving feedback from your students in your course by sending them a survey!</p>
+                <button class="survey-cta cta">Send survey</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `);
+
+      $('.survey-cta').on('click', function(event) {
+
+        // Enable the survey on the back-end
+
+        $('.survey-card').empty();
+        $('.survey-card').append(`
+          <div class="card-body">
+            <h5 class="card-title">Survey successfully sent!</h5>
+            <p class="card-text">Your survey results will appear in one week.</p>
+          </div>
+        `);
+      });
+    }
+  }); 
+}
 
 function getAllCourses() {
   const user = netlifyIdentity.currentUser();
@@ -30,8 +82,7 @@ function getAllCourses() {
         courses.map(course => addCourseToSideBar(course));
 
         // Bind on-click handler for when a user selects a course in the sidebar
-        $('.courses .course-info').on('click', function(event) {
-        }); 
+        bindCourseSelection();
       };
     });
   })

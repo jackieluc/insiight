@@ -28,6 +28,7 @@ exports.handler = function(event, context, callback) {
 
   const payload = JSON.parse(event.body);
   const joinCode = payload.joinCode;
+  const email = payload.email;
 
   MongoClient.connect(DB_URL, { useNewUrlParser: true }, function(err, connection) {
     if (err) return errorResponse(callback, err);
@@ -36,21 +37,40 @@ exports.handler = function(event, context, callback) {
 
     const db = connection.db(insiightDb);
     const surveys = db.collection('surveys');
+    const users = db.collection('users');
 
     console.log(payload);
 
     let result = 'inProgress';
 
-    surveys.findOne({ enabled: 'true', joinCode: joinCode }, function(err, survey) {
-      if (Moment.now() >= survey.expireTime) {
-        console.log('Survey has expired... Setting "enabled" to "false"');
+    users.findOne({ email: email, role: 'student' }, function(err, student) {
+      if (err) return errorResponse(callback, err);
+      console.log(student);
 
-        surveys.findOneAndUpdate({ enabled: 'true', joinCode: joinCode }, {enabled: 'false' });
-        result = 'expired';
-      };
+      // Get a list of the student's completed surveys
+      const completedSurveys = student.completedSurveys;
 
-      connection.close();
-      successResponse(callback, { result: result });
-    });    
+      // Find the survey that is enabled, there should only be one
+      surveys.findOne({ enabled: 'true', joinCode: joinCode }, function(err, survey) {
+        if (err) return errorResponse(callback, err);
+
+        if (survey === null) {
+          result = 'none';
+        }
+        else if (Moment.now() >= survey.expireTime) {
+          console.log('Survey has expired... Setting "enabled" to "false"');
+  
+          surveys.findOneAndUpdate({ enabled: 'true', joinCode: joinCode }, {enabled: 'false' });
+          result = 'expired';
+        }
+        else if (completedSurveys.includes(survey.surveyID)) {
+          console.log('Student has already completed this survey.');
+          result = 'completed';
+        }
+  
+        connection.close();
+        successResponse(callback, { result: result });
+      });    
+    });
   });
 }

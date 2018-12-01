@@ -77,9 +77,10 @@ function bindStudentSurvey(surveyFunction, surveyInfo) {
   
   surveyFunction(surveyInfo).then(surveyInProgress => {
     if (!surveyInProgress) {  
+      $('.survey-container').empty();
       $('.survey-container').append(`
         <div class="row">
-          <div class="col-sm-4">
+          <div class="col-sm-6">
             <div class="card survey-card">
               <div class="card-body">
                 <h5 class="card-title">There are no surveys at this time.</h5>

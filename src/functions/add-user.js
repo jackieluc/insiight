@@ -27,6 +27,14 @@ exports.handler = function(event, context, callback) {
 
   const payload = JSON.parse(event.body);
 
+  // Initialize student role with schema
+  if (payload.role === 'student') {
+    payload = {
+      ...payload,
+      completedSurveys: []
+    }
+  }
+
   MongoClient.connect(DB_URL, { useNewUrlParser: true }, function(err, connection) {
 
     if (err) return errorResponse(callback, err);

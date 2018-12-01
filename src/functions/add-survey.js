@@ -36,11 +36,11 @@ exports.handler = function(event, context, callback) {
     const db = connection.db(insiightDb);
     const surveys = db.collection('surveys');
 
-    // // Happy path
+    // Happy path
     surveys.insertOne(payload, function(err, result) {
       if (err) errorResponse(callback, err);
       
-      console.log('Added the following user to the database: ')
+      console.log('Added the following survey to the database: ')
       console.log(result.ops[0]);
     
       connection.close();

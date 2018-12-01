@@ -12,8 +12,8 @@ module.exports = {
     devtool: 'source-map',
     entry: {
         home: './src/index.js',
-        dashboard: './src/pages/student/dashboard.js',
-        dashboard: './src/pages/professor/dashboard.js',
+        studentDashboard: './src/pages/student/dashboard.js',
+        professorDashboard: './src/pages/professor/dashboard.js',
         survey: './src/pages/survey/survey.js',
         results:'./src/pages/results/results.js'
     },
@@ -114,13 +114,13 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: './src/pages/student/dashboard.html',
             inject: true,
-            chunks: ['dashboard'],
+            chunks: ['studentDashboard'],
             filename: './student/dashboard/index.html'
         }),
         new HtmlWebpackPlugin({
             template: './src/pages/professor/dashboard.html',
             inject: true,
-            chunks: ['dashboard'],
+            chunks: ['professorDashboard'],
             filename: './professor/dashboard/index.html'
         }),
         new HtmlWebpackPlugin({

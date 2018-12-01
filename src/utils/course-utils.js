@@ -48,7 +48,7 @@ function bindProfessorSurvey(surveySelectElement, surveyFunction, surveyInfo) {
           <div class="card survey-card">
             <div class="card-body">
               <h5 class="card-title">Survey is currently in progress for ${courseName}</h5>
-              <p class="card-text">Please wait until ${surveyIsInProgress.format('MMMM Do YYYY, h:mm:ss a')} to view the results of the survey.</p>
+              <p class="card-text">Please wait until ${surveyIsInProgress.format('MMMM Do YYYY, h:mm:ss')} to view the results of the survey.</p>
             </div>
           </div>
         </div>
@@ -65,7 +65,7 @@ function bindProfessorSurvey(surveySelectElement, surveyFunction, surveyInfo) {
     $('.survey-card').append(`
       <div class="card-body">
         <h5 class="card-title">Survey successfully sent!</h5>
-        <p class="card-text">Your survey results will appear on ${expireTime.format('MMMM Do YYYY, h:mm:ss a')}.</p>
+        <p class="card-text">Your survey results will appear on ${expireTime.format('MMMM Do YYYY, h:mm:ss')}.</p>
       </div>
     `);
 
@@ -110,10 +110,10 @@ function bindCourseSelection(surveyFunction) {
       expireTime: Moment().add(7, 'days')
     }
 
-    $('.dashboard-title').text(`Dashboard for ${courseName}`)
+    $('.dashboard-title').text(`Survey for ${courseName}`)
 
     if (role === 'professor') {
-      const surveySelectElement = $(`professor-survey-options`);
+      const surveySelectElement = $(`.professor-survey-options`);
       surveySelectElement.empty();
       
       bindProfessorSurvey(surveySelectElement, surveyFunction, surveyInfo);

@@ -1,23 +1,22 @@
+const Moment = require('moment');
+
 // Add course to list in sidebar
 function addCourseToSideBar(course) {
   const { courseName, professor, joinCode } = course;
   const role = localStorage.getItem('role');
-  let includeProfessorName = '';
-  
-  if (role === 'student') {
-    includeProfessorName = `<p data-professor="${professor}">Professor: ${professor}</p>`
-  };
+
+  const visibility = role === 'professor' ? `style="display:none;"` : '';
 
   $('.sidebar .courses').append(`
     <button class="course-info">
         <h5 data-course="${courseName}">Course Name: ${courseName}</h5>
-        ${includeProfessorName}
+        <p data-professor="${professor}" ${visibility}>Professor: ${professor}</p>
         <p data-code="${joinCode}">Join Code: ${joinCode}</p>
     </button>
   `);
 };
 
-function bindCourseSelection() {
+function bindCourseSelection(sendSurvey) {
   $('.courses .course-info').on('click', function(event) {
     const role = localStorage.getItem('role');
     const surveyOptions = $(`.${role}-survey-options`);
@@ -26,10 +25,19 @@ function bindCourseSelection() {
 
     const course = $(event.target).closest('.course-info');
     const courseName = course.find('[data-course]').data('course');
+    const professor = course.find('[data-professor]').data('professor');
     const joinCode = course.find('[data-code]').data('code');
 
+    const surveyInfo = {
+      courseName: courseName,
+      professor: professor,
+      joinCode: joinCode,
+      createdTime: Moment.now(),
+      expireTime: Moment().add(7, 'days')
+    }
+
     $('.dashboard-title').text(`Dashboard for ${courseName}`)
-    
+
     if (role === 'professor') {
       surveyOptions.append(`
         <div class="row">
@@ -48,12 +56,13 @@ function bindCourseSelection() {
       $('.survey-cta').on('click', function(event) {
 
         // Enable the survey on the back-end
+        sendSurvey(surveyInfo);
 
         $('.survey-card').empty();
         $('.survey-card').append(`
           <div class="card-body">
             <h5 class="card-title">Survey successfully sent!</h5>
-            <p class="card-text">Your survey results will appear in one week.</p>
+            <p class="card-text">Your survey results will appear on ${surveyInfo.expireTime.format('MMMM Do YYYY, h:mm:ss a')}.</p>
           </div>
         `);
       });
@@ -61,7 +70,7 @@ function bindCourseSelection() {
   }); 
 }
 
-function getAllCourses() {
+function getAllCourses(sendSurvey) {
   const user = netlifyIdentity.currentUser();
 
   fetch('/.netlify/functions/get-courses', {
@@ -82,7 +91,7 @@ function getAllCourses() {
         courses.map(course => addCourseToSideBar(course));
 
         // Bind on-click handler for when a user selects a course in the sidebar
-        bindCourseSelection();
+        bindCourseSelection(sendSurvey);
       };
     });
   })

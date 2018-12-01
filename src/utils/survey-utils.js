@@ -132,4 +132,4 @@ function getSurvey(surveyInfo) {
   .catch(err => console.error(err));
 };
 
-module.exports = { initSurvey, surveySchema, addSurvey, getSurvey }
+module.exports = { addSurvey, getSurvey }

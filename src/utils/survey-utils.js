@@ -100,7 +100,7 @@ function addSurvey(surveyInfo) {
   surveySchema.pages[0].elements.forEach(function(question) {
     const aQuestion = schema[question.name] = {};
     question.choices.forEach(function(choice) {
-      aQuestion[choice] = '0';
+      aQuestion[choice] = 0;
     });
   });
 

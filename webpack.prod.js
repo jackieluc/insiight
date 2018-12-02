@@ -106,12 +106,6 @@ module.exports = {
             filename: './index.html'
         }),
         new HtmlWebpackPlugin({
-            template: './src/pages/about/about.html',
-            inject: true,
-            chunks: ['about'],
-            filename: './about/index.html'
-        }),
-        new HtmlWebpackPlugin({
             template: './src/pages/student/dashboard.html',
             inject: true,
             chunks: ['studentDashboard'],
@@ -128,6 +122,12 @@ module.exports = {
             inject: true,
             chunks: ['survey'],
             filename: './survey/index.html'
+        }),
+        new HtmlWebpackPlugin({
+            template: './src/pages/discussion-thread/discussion-thread.html',
+            inject: true,
+            chunks: ['discussion-thread'],
+            filename: './discussion-thread/index.html'
         }),
         new HtmlWebpackPlugin({
             template: './src/pages/results/results.html',

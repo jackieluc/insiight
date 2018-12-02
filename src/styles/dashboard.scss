@@ -66,6 +66,33 @@
         h3 {
             margin: 1rem 2rem;
         }
+
+        .thread-form{
+            width: 100%;
+            border-radius: 4px;
+        }
+
+        .submit-btn{
+            background-color: lightblue;
+            border-color: transparent;
+            &:hover {
+                cursor: pointer;
+            }
+
+            img {
+                width: 48px;
+            }
+        }
+        .upvote-btn{
+            background-color: lightsalmon;
+            &:hover {
+                cursor: pointer;
+            }
+            img {
+                width: 10px;
+            }
+        }
+
     }
 }
 

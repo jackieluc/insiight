@@ -57,7 +57,7 @@ function checkRoleFromDb() {
       if (!payload || !payload.role) openRoleModal();
       else {
         localStorage.setItem('role', payload.role);
-        location.reload();
+        // location.reload();
       }
     });
   })
@@ -69,6 +69,11 @@ function initRoleSelection() {
     setTimeout(function() { 
       $('.netlify-identity-item.netlify-identity-user-details span').text('Hi, ' + user.user_metadata.full_name);
     }, 20);
+
+    // Change the navigation menu URL to include the role
+    if (!Boolean(localStorage.getItem('role'))) {        
+      checkRoleFromDb();
+    };
   });
 };
 

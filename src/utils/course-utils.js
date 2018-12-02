@@ -198,13 +198,20 @@ function bindAddCourseButton(surveyFunction) {
       }
 
       response.text().then(function(result) {
-        const course = JSON.parse(result);
-        addCourseToSideBar(course);
-        // Bind on-click handler for when a user selects a course in the sidebar
-        bindCourseSelection(surveyFunction);
-      });
+        if (!result.response) {
+          $('#add-course-form .student-form').append(`
+            <p style="color: red; margin: 1rem 0 0 0;">Course does not exist, please try another Join Code.</p>
+          `)
+        }
+        else {
+          const course = JSON.parse(result);
+          addCourseToSideBar(course);
+          // Bind on-click handler for when a user selects a course in the sidebar
+          bindCourseSelection(surveyFunction);
 
-      $('#add-course-modal').modal('hide');
+          $('#add-course-modal').modal('hide');
+        }
+      });
     })
     .catch(err => console.error(err));
   });

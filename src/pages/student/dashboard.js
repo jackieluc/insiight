@@ -25,11 +25,11 @@ $(window).on('load', () => {
 initRoleSelection();
 
 netlifyIdentity.on('login', () => {
+  const role = localStorage.getItem('role');
+
   // get all courses on load or refresh
   // pass in survey options to dynamically bind to button selections in the course list
   getAllCourses(getSurvey);
-
-  const role = localStorage.getItem('role');
 
   // Change the navigation menu URL to include the role
   $('nav .dashboard-link .nav-link').attr('href', `/${role}/dashboard`);

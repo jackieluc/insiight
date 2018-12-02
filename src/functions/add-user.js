@@ -27,14 +27,16 @@ exports.handler = function(event, context, callback) {
 
   const payload = JSON.parse(event.body);
 
+  let userSchema = payload;
+
   // Initialize student role with schema
   if (payload.role === 'student') {
-    payload = {
+    userSchema = {
       ...payload,
+      courses: [],
       completedSurveys: []
     }
   }
-
   MongoClient.connect(DB_URL, { useNewUrlParser: true }, function(err, connection) {
 
     if (err) return errorResponse(callback, err);
@@ -45,7 +47,7 @@ exports.handler = function(event, context, callback) {
     const users = db.collection('users');
 
     // Happy path.. does not check for duplicates
-    users.insertOne(payload, function(err, result) {
+    users.insertOne(userSchema, function(err, result) {
       if (err) errorResponse(callback, err);
       
       console.log('Added the following user to the database: ')

@@ -25,12 +25,13 @@ function addThreadToBody() {
   const role = localStorage.getItem('role');
   role === 'professor' ? `style="display:none;"` : '';
 
-  document.getElementById('spanResult').textContent = result;
-  
-  var result = thread.body;
+  //used
+  thread.body = document.getElementById("textone").value;     
+  document.getElementById('showThreadBody').textContent = thread.body;
+
   $('.discussion-thread .thread-form').append(`
-    <input type="text" id="textone" />
-  `);
+  result
+ `);
 };
 
 function upvoteThreadBtn(){

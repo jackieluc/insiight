@@ -80,8 +80,6 @@ function submitSurvey(survey, joinCode) {
 
 function initSurvey(joinCode) {
   const survey = new Survey.Model(surveySchema);
-  survey.surveyPostId = '72167288-14c7-4f0e-af17-6c4955db4e9a';
-  survey.surveyShowDataSaving = false;
 
   survey.onComplete.add(function (survey) {
     submitSurvey(survey, joinCode);

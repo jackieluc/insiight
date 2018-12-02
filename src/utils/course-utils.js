@@ -22,11 +22,13 @@ function bindProfessorSurvey(surveySelectElement, surveyFunction, surveyInfo) {
   const surveyIsInProgress = localStorage.getItem(`survey-${joinCode}`);
   const surveyIsExpired = surveyIsInProgress === 'expired' ? true : Moment().isAfter(surveyIsInProgress);
 
-  if (surveyIsExpired) {
+  const surveyIsStarted = surveyIsInProgress === null ? false : true;
+
+  if (surveyIsExpired || !surveyIsStarted) {
     localStorage.setItem(`survey-${joinCode}`, 'expired');
   }
 
-  if (surveyIsExpired) {
+  if (surveyIsExpired || !surveyIsStarted) {
     surveySelectElement.append(`
       <div class="row">
         <div class="col-sm-4">
@@ -198,13 +200,14 @@ function bindAddCourseButton(surveyFunction) {
       }
 
       response.text().then(function(result) {
-        if (!result.response) {
+        const course = JSON.parse(result);
+
+        if (!course.courseName) {
           $('#add-course-form .student-form').append(`
             <p style="color: red; margin: 1rem 0 0 0;">Course does not exist, please try another Join Code.</p>
           `)
         }
         else {
-          const course = JSON.parse(result);
           addCourseToSideBar(course);
           // Bind on-click handler for when a user selects a course in the sidebar
           bindCourseSelection(surveyFunction);

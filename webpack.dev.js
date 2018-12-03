@@ -10,7 +10,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 //     .filter(fileName => fileName.endsWith('.html'))
 
 module.exports = {
-    devtool: 'eval-cheap-module-source-map',
+    devtool: 'cheap-module-source-map',
     entry: {
         home: './src/index.js',
         studentDashboard: './src/pages/student/dashboard.js',

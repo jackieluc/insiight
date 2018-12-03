@@ -21,6 +21,9 @@
             justify-content: center;
         }
     }
+    .professor-survey-options {
+        height: 50%;
+    }
 
     .survey-container {
         width: 100%;
@@ -29,7 +32,7 @@
 
         .sv_main {
             font-size: 1rem;
-
+            
             .sv_body {
                 border-top: 0;
                 padding: 0;
@@ -52,6 +55,6 @@
                     }
                 }
             }
-        }
+        }   
     }
 }

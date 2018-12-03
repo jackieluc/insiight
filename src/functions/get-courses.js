@@ -40,7 +40,13 @@ exports.handler = function(event, context, callback) {
     console.log(`Looking for user with the email: ${email}`);
 
     users.findOne({ email }, function(err, profile) {
+      if (err) return errorResponse(callback, err);
       
+      if (!profile) {
+        connection.close();
+        successResponse(callback, { response: null });
+      }
+
       console.log('Retrieved the profile:');
       console.log(profile);
       const joinCodes = profile.courses;

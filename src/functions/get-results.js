@@ -1,12 +1,12 @@
 const { MongoClient } = require('mongodb');
 const { insiightDb, insiightUser, insiightPw } = process.env;
+const Moment = require('moment');
 
 const DB_URL = `mongodb://${insiightUser}:${insiightPw}@ds151863.mlab.com:51863/${insiightDb}`;
 
 function errorResponse(callback, err) {
   console.error('END: Error response.');
   console.error(err);
-
   callback(null, {
     statusCode: 500,
     body: JSON.stringify({ error: err })
@@ -24,38 +24,27 @@ function successResponse(callback, res) {
 
 exports.handler = function(event, context, callback) {
   console.log('START: Received request.');
+  
+  const { joinCode } = JSON.parse(event.body);
 
-  const payload = JSON.parse(event.body);
-
-  let userSchema = payload;
-
-  // Initialize student role with schema
-  if (payload.role === 'student') {
-    userSchema = {
-      ...payload,
-      courses: [],
-      completedSurveys: []
-    }
-  }
   MongoClient.connect(DB_URL, { useNewUrlParser: true }, function(err, connection) {
-
     if (err) return errorResponse(callback, err);
 
     console.log('Database successfully connected.');
 
     const db = connection.db(insiightDb);
-    const users = db.collection('users');
-
-    // Happy path.. does not check for duplicates
-    users.insertOne(userSchema, function(err, result) {
-      if (err) errorResponse(callback, err);
-      
-      console.log('Added the following user to the database: ')
-      // see http://mongodb.github.io/node-mongodb-native/3.1/api/Collection.html#~insertOneWriteOpResult
-      console.log(result.ops[0]);
+    const surveys = db.collection('surveys');
     
+    surveys.findOne( { joinCode } , function(err, survey) {
+      if (err) return errorResponse(callback, err);
+
+      let temp = JSON.stringify(survey.schema);
+      const result = temp.match(/[+-]?\d+(?:\.\d+)?/g).map(Number);
+        
+      console.log(result[0]);
+      
       connection.close();
-      successResponse(callback, result.ops[0]);
+      successResponse(callback, { result });   
     });
   });
 }

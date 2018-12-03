@@ -26,36 +26,43 @@ exports.handler = function(event, context, callback) {
   console.log('START: Received request.');
 
   const payload = JSON.parse(event.body);
+  const joinCode = payload.joinCode;
 
-  let userSchema = payload;
-
-  // Initialize student role with schema
-  if (payload.role === 'student') {
-    userSchema = {
-      ...payload,
-      courses: [],
-      completedSurveys: []
-    }
-  }
   MongoClient.connect(DB_URL, { useNewUrlParser: true }, function(err, connection) {
-
     if (err) return errorResponse(callback, err);
 
     console.log('Database successfully connected.');
 
     const db = connection.db(insiightDb);
-    const users = db.collection('users');
+    const discussions = db.collection('discussions');
 
-    // Happy path.. does not check for duplicates
-    users.insertOne(userSchema, function(err, result) {
+    // Happy path
+    discussions.findOne({ joinCode: joinCode }, function(err, discussionThread) {
       if (err) errorResponse(callback, err);
-      
-      console.log('Added the following user to the database: ')
-      // see http://mongodb.github.io/node-mongodb-native/3.1/api/Collection.html#~insertOneWriteOpResult
-      console.log(result.ops[0]);
-    
-      connection.close();
-      successResponse(callback, result.ops[0]);
+
+      // if no discussion thread exists, insert new one
+      if (!discussionThread) {
+        console.log('Discussion thread not found.');
+        connection.close();
+        successResponse(callback, { response: null });
+      }
+      else {
+        console.log('Found comments in discussion thread.');
+        
+        const { discussionID, comments } = discussionThread;
+  
+        const sortedComments = comments.sort(function(a, b) {
+          return b.upvotes - a.upvotes;
+        });
+  
+        const response = {
+          discussionID: discussionID,
+          comments: sortedComments
+        };
+  
+        connection.close();
+        successResponse(callback, response);
+      };
     });
   });
 }

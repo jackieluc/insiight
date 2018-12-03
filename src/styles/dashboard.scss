@@ -60,13 +60,105 @@
     }
 
     .discussion-thread {
-        width: 30%;
+        width: 25%;
+        height: 100%;
+        display: none; // JS will make this to display: flex
+        flex-direction: column;
         border-left: 1px solid #AAA;
 
-        h3 {
+        h4 {
             margin: 1rem 2rem;
         }
+
+        .thread {
+            height: 100%;
+            overflow-y: auto;
+        }
+
+        .comment-wrapper {
+            padding: 0.5rem 2rem;
+            background: #3ED2CC;
+            margin: 1rem 2rem;
+            text-align: left;
+            border-radius: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .message {
+                margin: 0;
+                padding: 0;
+            }
+            
+            .upvote-btn {
+                width: 32px;
+                height: 48px;
+                background: none;
+                border: none;
+                cursor: pointer;
+
+                img {
+                    width: 16px;
+                    height: 16px;
+                }
+            }
+
+            .upvote-num {
+                text-align: center;
+                margin: 0;
+                padding: 0;
+            }
+        }
+
+        .bottom-section {
+            margin-top: auto;
+            width: 100%;
+            text-align: center;
+            align-items: center;
+            background-color: #333;
+            height: 150px;
+            display: flex;
+            z-index: 999;
+
+            .comment-box {
+                height: 100%;
+                width: 100%;
+                padding: 0.5rem;
+                
+                textarea {
+                    height: 100%;
+                    width: 100%;
+                    border-radius: 30px;
+                    padding: 1rem;
+                    resize: none;
+                }
+            }
+            button { 
+                width: 80px;
+                height: 70px;
+                border-radius: 40px;
+                background: paleturquoise;
+                border-color: transparent;
+                
+                &:hover {
+                    cursor: pointer;
+                }
+            }             
+        }
     }
+}
+
+#question-containers{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    //border: 1px black solid;
+    //margin: 0 auto;
+}
+
+.qcontainer{
+    width: 15vw;
+    margin: auto;
 }
 
 #add-course-form {

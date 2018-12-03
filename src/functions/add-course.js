@@ -55,22 +55,30 @@ exports.handler = function(event, context, callback) {
       courses.findOne({ joinCode: joinCode }, function(err, course) {
         if (err) errorResponse(callback, err);
 
-        console.log(`Found course with course code ${joinCode} in the database!`);
-        console.log(course);
-
-        const updates = {
-          $addToSet: {
-            courses: course.joinCode
-          }
-        };
-
-        users.updateOne({ email: email }, updates, function(err, acknowledge) {
-
-          console.log('Added course to user profile.');
+        if (!course) {
+          console.log(`Found no course with the course join code ${joinCode} in the database.`);
 
           connection.close();
-          successResponse(callback, course);
-        });
+          successResponse(callback, { response: null });
+        }
+        else {
+          console.log(`Found course with course join code ${joinCode} in the database!`);
+          console.log(course);
+  
+          const updates = {
+            $addToSet: {
+              courses: course.joinCode
+            }
+          };
+  
+          users.updateOne({ email: email }, updates, function(err, acknowledge) {
+  
+            console.log('Added course to user profile.');
+  
+            connection.close();
+            successResponse(callback, course);
+          });
+        }
       });
     }
     else if (role === 'professor') {

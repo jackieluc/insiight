@@ -26,36 +26,48 @@ exports.handler = function(event, context, callback) {
   console.log('START: Received request.');
 
   const payload = JSON.parse(event.body);
+  const { email, discussionID, commentID } = payload;
 
-  let userSchema = payload;
-
-  // Initialize student role with schema
-  if (payload.role === 'student') {
-    userSchema = {
-      ...payload,
-      courses: [],
-      completedSurveys: []
-    }
-  }
   MongoClient.connect(DB_URL, { useNewUrlParser: true }, function(err, connection) {
-
     if (err) return errorResponse(callback, err);
 
     console.log('Database successfully connected.');
 
     const db = connection.db(insiightDb);
     const users = db.collection('users');
+    const discussions = db.collection('discussions');
 
-    // Happy path.. does not check for duplicates
-    users.insertOne(userSchema, function(err, result) {
+    const findComment = {
+      discussionID: discussionID,
+      'comments.commentID': commentID.toString()
+    };
+
+    const incrementUpvote = {
+      $inc: { 
+        'comments.$.upvotes': 1
+      }
+    };
+
+    // Happy path
+    discussions.updateOne(findComment, incrementUpvote, function(err, result) {
       if (err) errorResponse(callback, err);
-      
-      console.log('Added the following user to the database: ')
-      // see http://mongodb.github.io/node-mongodb-native/3.1/api/Collection.html#~insertOneWriteOpResult
-      console.log(result.ops[0]);
-    
-      connection.close();
-      successResponse(callback, result.ops[0]);
+
+      console.log(`Successfully upvoted the comment ${commentID} in the discussion thread ${discussionID}`);
+
+      const addToMyUpvotes = {
+        $addToSet: {
+          myUpvotes: commentID.toString()
+        }
+      }
+
+      users.updateOne({ email: email }, addToMyUpvotes, function(err, result) {
+        if (err) errorResponse(callback, err);
+
+        console.log('Updated student\'s upvote list to prevent repeated upvotes.');
+
+        connection.close();
+        successResponse(callback, { response: 'success' });
+      });
     });
   });
 }

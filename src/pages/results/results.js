@@ -16,7 +16,7 @@ var colors = [
 
 var gdata = [7, 10, 5, 12, 20];
 
-var glabels = ["Answer 1", "Answer 2", "Answer 3", "Answer 4", "Answer 5"];
+var glabels = ["Very Good", "Good", "Netural", "Bad", "Very Bad"];
 
 
 
@@ -85,21 +85,8 @@ var chart = new Chart(ctx, {
         labels: ["January", "February", "March", "April", "May"],
         datasets: [{
             label: "My First dataset",
-            backgroundColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(100, 102, 255, 1)'
-            ],
-            borderColor: [
-                'rgba(255,99,132,1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)'
-            ],
+            backgroundColor: colors,
+            borderColor: colors,
             data: [30, 10, 15, 25, 20],
         }]
     },
@@ -123,20 +110,8 @@ var chart = new Chart(ctx, {
         labels: ["January", "February", "March", "April", "May"],
         datasets: [{
             label: "My First dataset",
-            backgroundColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)'
-            ],
-            borderColor: [
-                'rgba(255,99,132,1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)'
-            ],
+            backgroundColor: colors,
+            borderColor: colors,
             data: [10, 10, 5, 25, 20],
         }]
     },
@@ -160,20 +135,8 @@ var chart = new Chart(ctx, {
         labels: ["January", "February", "March", "April", "May"],
         datasets: [{
             label: "My First dataset",
-            backgroundColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)'
-            ],
-            borderColor: [
-                'rgba(255,99,132,1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)'
-            ],
+            backgroundColor: colors,
+            borderColor: colors,
             data: [10, 10, 5, 25, 20],
         }]
     },

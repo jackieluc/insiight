@@ -148,6 +148,19 @@
     }
 }
 
+#question-containers{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    //border: 1px black solid;
+    //margin: 0 auto;
+}
+
+.qcontainer{
+    width: 15vw;
+    margin: auto;
+}
+
 #add-course-form {
     padding: 15px;
 

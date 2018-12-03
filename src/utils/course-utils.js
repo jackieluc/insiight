@@ -1,4 +1,7 @@
 const Moment = require('moment');
+var data;
+
+
 
 // Add course to list in sidebar
 function addCourseToSideBar(course) {
@@ -28,6 +31,7 @@ function bindProfessorSurvey(surveySelectElement, surveyFunction, surveyInfo) {
     localStorage.setItem(`survey-${joinCode}`, 'expired');
   }
 
+
   if (surveyIsExpired || !surveyIsStarted) {
     surveySelectElement.append(`
       <div class="row">
@@ -37,6 +41,7 @@ function bindProfessorSurvey(surveySelectElement, surveyFunction, surveyInfo) {
               <h5 class="card-title">Send a survey to ${courseName}</h5>
               <p class="card-text">Start receiving feedback from your students in your course by sending them a survey!</p>
               <button class="survey-cta cta">Send survey</button>
+              <button class="results-cta cta">View Results</button>
             </div>
           </div>
         </div>
@@ -51,6 +56,7 @@ function bindProfessorSurvey(surveySelectElement, surveyFunction, surveyInfo) {
             <div class="card-body">
               <h5 class="card-title">Survey is currently in progress for ${courseName}</h5>
               <p class="card-text">Please wait until ${surveyIsInProgress.format('MMMM Do YYYY, h:mm:ss')} to view the results of the survey.</p>
+              <button class="results-cta cta">View Results</button>
             </div>
           </div>
         </div>
@@ -59,7 +65,6 @@ function bindProfessorSurvey(surveySelectElement, surveyFunction, surveyInfo) {
   };
 
   $('.survey-cta').on('click', function(event) {
-
     // Enable the survey on the back-end
     surveyFunction(surveyInfo);
 
@@ -72,6 +77,186 @@ function bindProfessorSurvey(surveySelectElement, surveyFunction, surveyInfo) {
     `);
 
     localStorage.setItem(`survey-${joinCode}`, expireTime);
+  });
+
+  $('.results-cta').on('click', function(event) {
+    getResults();
+    //getResults().then(function(myJson) {console.log(JSON.stringify(myJson))});
+    //console.log(test);
+
+    //$('.survey-card').empty();
+    $('.survey-container').empty();
+    $('.survey-container').append(`
+      <div id="question-containers">
+        <div class="qcontainer" >
+          <canvas id="q1_Chart"></canvas>
+        </div>
+        <div class="qcontainer">
+           <canvas id="q2_Chart"></canvas>
+        </div>
+        <div class="qcontainer" >
+          <canvas id="q3_Chart"></canvas>
+        </div>
+      </div>
+
+      <div id="question-containers">
+        <div class="qcontainer" >
+          <canvas id="q4_Chart"></canvas>
+        </div>
+        <div class="qcontainer" >
+          <canvas id="q5_Chart"></canvas>
+        </div>
+      </div>
+    `);
+    var ctx = document.getElementById('q1_Chart').getContext('2d');
+    var ctx2 = document.getElementById('q2_Chart').getContext('2d');
+    var ctx3 = document.getElementById('q3_Chart').getContext('2d');
+    var ctx4 = document.getElementById('q4_Chart').getContext('2d');
+    var ctx5 = document.getElementById('q5_Chart').getContext('2d');
+    var colors = [
+      'rgba(255, 99, 132, 1)',
+      'rgba(54, 162, 235, 1)',
+      'rgba(255, 206, 86, 1)',
+      'rgba(75, 192, 192, 1)',
+      'rgba(153, 102, 255, 1)'
+  ];
+  
+  var gdata = [7, 10, 5, 12, 20];
+  
+  var glabels = ["Answer 1", "Answer 2", "Answer 3", "Answer 4", "Answer 5"];
+  
+  //var q1data = resultz.slice(4);
+  //var q2data = resultz.slice(5,10);
+  //var q3data = resultz.slice(10,15);
+  //var q4data = resultz.slice(15, 20);
+  //var q5data = resultz.slice(20,25);
+  
+  
+  
+  Chart.defaults.global.defaultFontFamily = 'Roboto';
+   
+  var chart = new Chart(ctx, {
+      // The type of chart we want to create
+      type: 'pie',
+  
+      // The data for our dataset
+      data: {
+          labels: glabels ,
+          datasets: [{
+              data: gdata,
+              backgroundColor: colors,
+              borderColor: colors,
+              borderWidth: 1
+          }]
+      },
+  
+      // Configuration options go here
+      options: {
+          title: {
+              display: true,
+              text: 'Question 1'
+          }
+      }
+  });
+  
+  
+  var chart = new Chart(ctx2, {
+      // The type of chart we want to create
+      type: 'pie',
+  
+      // The data for our dataset
+      data: {
+          labels: glabels,
+          datasets: [{
+              data: [5, 10, 5, 2, 20],
+              backgroundColor: colors,
+              borderColor: colors,
+              borderWidth: 1
+          }]
+      },
+  
+      // Configuration options go here
+      options: {
+          title: {
+              display: true,
+              text: 'Question 2'
+          }
+      }
+  });
+  
+  
+  var chart = new Chart(ctx3, {
+      // The type of chart we want to create
+      type: 'pie',
+  
+      // The data for our dataset
+      data: {
+          labels: ["January", "February", "March", "April", "May"],
+          datasets: [{
+              label: "My First dataset",
+              backgroundColor: colors,
+              borderColor: colors,
+              data: [30, 10, 15, 25, 20],
+          }]
+      },
+  
+      // Configuration options go here
+      options: {
+          title: {
+              display: true,
+              text: 'Question 3'
+          }
+      }
+  });
+  
+  var chart = new Chart(ctx4, {
+      // The type of chart we want to create
+      type: 'pie',
+  
+      // The data for our dataset
+      data: {
+          labels: ["January", "February", "March", "April", "May"],
+          datasets: [{
+              label: "My First dataset",
+              backgroundColor: colors,
+              borderColor: colors,
+              data: [10, 10, 5, 25, 20],
+          }]
+      },
+  
+      // Configuration options go here
+      options: {
+          title: {
+              display: true,
+              text: 'Question 4'
+          }
+      }
+  });
+  
+  var chart = new Chart(ctx5, {
+      // The type of chart we want to create
+      type: 'pie',
+  
+      // The data for our dataset
+      data: {
+          labels: ["January", "February", "March", "April", "May"],
+          datasets: [{
+              label: "My First dataset",
+              backgroundColor: colors,
+              borderColor: colors,
+              data: [10, 10, 5, 25, 20],
+          }]
+      },
+  
+      // Configuration options go here
+      options: {
+          title: {
+              display: true,
+              text: 'Question 5'
+          }
+      }
+  });
+  
   });
 };
 
@@ -102,9 +287,12 @@ function showDiscussionThread() {
 
 function bindCourseSelection(surveyFunction, submitComment, getComments) {
   $('.courses .course-info').on('click', function(event) {
+    
+    
     const role = localStorage.getItem('role');
 
     const course = $(event.target).closest('.course-info');
+    
     const courseName = course.find('[data-course]').data('course');
     const professor = course.find('[data-professor]').data('professor');
     const joinCode = course.find('[data-code]').data('code');
@@ -157,7 +345,9 @@ function getAllCourses(surveyFunction, submitComment, getComments) {
     }
 
     response.text().then(function(result) {
+
       const { courses } = JSON.parse(result);
+      
 
       if (courses) {
         courses.map(course => addCourseToSideBar(course));
@@ -170,12 +360,38 @@ function getAllCourses(surveyFunction, submitComment, getComments) {
   .catch(err => console.error(err));
 };
 
+function getResults() {
+
+  const role = localStorage.getItem('role');
+
+  const course = $(event.target).closest('.course-info');
+  console.log(course);
+
+  fetch('/.netlify/functions/get-results', {
+    method: "POST",
+    body: '1172'
+  })
+  .then(response => {
+    if (!response.ok) {
+      return response
+        .text()
+        .then(err => {throw(err)});
+    }
+
+    response.text().then(function(result) {
+      data = result;
+    });
+  })
+  .catch(err => console.error(err));
+};
+
 // Takes the information from the form and submits it to add-course Netlify function
 function bindAddCourseButton(surveyFunction, submitComment, getComments) {
   $('.add-course-button').on('click', function() {
     const user = netlifyIdentity.currentUser();
     const role = localStorage.getItem('role');
     const form = $(`#add-course-form .${role}-form`);
+    
     
     let courseInfo = {};
     

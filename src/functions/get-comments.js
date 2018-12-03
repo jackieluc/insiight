@@ -49,7 +49,6 @@ exports.handler = function(event, context, callback) {
       else {
         console.log('Found comments in discussion thread.');
         
-  
         const { discussionID, comments } = discussionThread;
   
         const sortedComments = comments.sort(function(a, b) {

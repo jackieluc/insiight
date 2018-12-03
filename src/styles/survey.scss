@@ -11,7 +11,7 @@
 
     .professor-survey-options,
     .student-survey-options {
-        height: 50%;
+        height: 100%;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -20,6 +20,9 @@
             width: 100%;
             justify-content: center;
         }
+    }
+    .professor-survey-options {
+        height: 50%;
     }
 
     .survey-container {
@@ -51,10 +54,6 @@
                         margin-top: 40vh;
                     }
                 }
-
-            &:hover {
-                color: white;
-            }
             }
         }   
     }

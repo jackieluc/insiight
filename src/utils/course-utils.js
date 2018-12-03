@@ -80,8 +80,17 @@ function bindProfessorSurvey(surveySelectElement, surveyFunction, surveyInfo) {
   });
 
   $('.results-cta').on('click', function(event) {
-    getResults(joinCode);
-    //getResults().then(function(myJson) {console.log(JSON.stringify(myJson))});
+    displayResults();
+  });
+
+  function getRandomInt() {
+    max = 50;
+    return Math.floor(Math.random() * Math.floor(max));
+  }
+
+  function displayResults(){
+    //getResults().then(function(myJson) {alert(JSON.stringify(myJson))});
+    //alert ();
 
     $('.survey-container').append(`
       <div id="question-containers">
@@ -122,6 +131,27 @@ function bindProfessorSurvey(surveySelectElement, surveyFunction, surveyInfo) {
   
   var glabels = ["Answer 1", "Answer 2", "Answer 3", "Answer 4", "Answer 5"];
   
+  var q1data = [getRandomInt(), getRandomInt(), getRandomInt(), getRandomInt(), getRandomInt()];
+  var q2data = [getRandomInt(), getRandomInt(), getRandomInt(), getRandomInt(), getRandomInt()];
+  var q3data = [getRandomInt(), getRandomInt(), getRandomInt(), getRandomInt(), getRandomInt()];
+  var q4data = [getRandomInt(), getRandomInt(), getRandomInt(), getRandomInt(), getRandomInt()];
+  var q5data = [getRandomInt(), getRandomInt(), getRandomInt(), getRandomInt(), getRandomInt()];
+
+  var q1label = "How are you today?";
+  var q1answer = ["Upset","Tired","So-So","OK", "Peachy"];
+
+  var q2label = "How was Class?";
+  var q2answer = ["Very Useless","Useless","Neither","Helpful","Very Helpful"];
+
+  var q3label = "How was the lecture material this week?";
+  var q3answer = ["Very Hard","Hard","Average","Easy","Very Easy"];
+
+  var q4label = "Do you find the material useful?";
+  var q4answer = ["Absolutely Not","No","Neutral","Yes","Very Useful"];
+
+  var q5label = "How comfortable are you with the material so far?";
+  var q5answer = ["Very Uncomfortable","Uncomfortable","Neutral","Comfortable","Very Comfortable"];
+  
   //var q1data = resultz.slice(4);
   //var q2data = resultz.slice(5,10);
   //var q3data = resultz.slice(10,15);
@@ -138,9 +168,9 @@ function bindProfessorSurvey(surveySelectElement, surveyFunction, surveyInfo) {
   
       // The data for our dataset
       data: {
-          labels: glabels ,
+          labels: q1answer,
           datasets: [{
-              data: gdata,
+              data: q1data,
               backgroundColor: colors,
               borderColor: colors,
               borderWidth: 1
@@ -151,7 +181,7 @@ function bindProfessorSurvey(surveySelectElement, surveyFunction, surveyInfo) {
       options: {
           title: {
               display: true,
-              text: 'Question 1'
+              text: q1label
           }
       }
   });
@@ -163,9 +193,9 @@ function bindProfessorSurvey(surveySelectElement, surveyFunction, surveyInfo) {
   
       // The data for our dataset
       data: {
-          labels: glabels,
+          labels: q2answer,
           datasets: [{
-              data: [5, 10, 5, 2, 20],
+              data: q2data,
               backgroundColor: colors,
               borderColor: colors,
               borderWidth: 1
@@ -176,7 +206,7 @@ function bindProfessorSurvey(surveySelectElement, surveyFunction, surveyInfo) {
       options: {
           title: {
               display: true,
-              text: 'Question 2'
+              text: q2label
           }
       }
   });
@@ -188,12 +218,12 @@ function bindProfessorSurvey(surveySelectElement, surveyFunction, surveyInfo) {
   
       // The data for our dataset
       data: {
-          labels: ["January", "February", "March", "April", "May"],
+          labels: q3answer,
           datasets: [{
               label: "My First dataset",
               backgroundColor: colors,
               borderColor: colors,
-              data: [30, 10, 15, 25, 20],
+              data: q3data,
           }]
       },
   
@@ -201,7 +231,7 @@ function bindProfessorSurvey(surveySelectElement, surveyFunction, surveyInfo) {
       options: {
           title: {
               display: true,
-              text: 'Question 3'
+              text: q3label
           }
       }
   });
@@ -212,12 +242,12 @@ function bindProfessorSurvey(surveySelectElement, surveyFunction, surveyInfo) {
   
       // The data for our dataset
       data: {
-          labels: ["January", "February", "March", "April", "May"],
+          labels: q4answer,
           datasets: [{
               label: "My First dataset",
               backgroundColor: colors,
               borderColor: colors,
-              data: [10, 10, 5, 25, 20],
+              data: q4data,
           }]
       },
   
@@ -225,7 +255,7 @@ function bindProfessorSurvey(surveySelectElement, surveyFunction, surveyInfo) {
       options: {
           title: {
               display: true,
-              text: 'Question 4'
+              text: q4label
           }
       }
   });
@@ -236,12 +266,12 @@ function bindProfessorSurvey(surveySelectElement, surveyFunction, surveyInfo) {
   
       // The data for our dataset
       data: {
-          labels: ["January", "February", "March", "April", "May"],
+          labels: q5answer,
           datasets: [{
               label: "My First dataset",
               backgroundColor: colors,
               borderColor: colors,
-              data: [10, 10, 5, 25, 20],
+              data: q5data,
           }]
       },
   
@@ -249,12 +279,12 @@ function bindProfessorSurvey(surveySelectElement, surveyFunction, surveyInfo) {
       options: {
           title: {
               display: true,
-              text: 'Question 5'
+              text: q5label
           }
       }
   });
   
-  });
+  };
 };
 
 function bindStudentSurvey(surveyFunction, surveyInfo) {
@@ -363,7 +393,9 @@ function getResults(joinCode) {
     method: "POST",
     body: JSON.stringify({ joinCode: joinCode })
   })
+  
   .then(response => {
+    console.log("fdgffhgj");
     if (!response.ok) {
       return response
         .text()
@@ -371,7 +403,8 @@ function getResults(joinCode) {
     }
 
     response.text().then(function(result) {
-      data = result;
+      var test = JSON.stringify(result);
+      //alert(test);
     });
   })
   .catch(err => console.error(err));

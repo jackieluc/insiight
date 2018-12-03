@@ -16,7 +16,7 @@ const surveySchema = {
         name: "How are you today?",
         colCount: 5,
         isRequired: true,
-        choices:["Very Good","Good","OK","Bad", "Very Bad"]
+        choices: ["Upset","Tired","So-So","OK", "Peachy"]
       },
       {
         type: "radiogroup",

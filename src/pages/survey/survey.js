@@ -26,7 +26,7 @@ var surveyJSON = {questionTitleTemplate : "{no}. {title}",
             type:"radiogroup",
             name:"How are you today?",
             isRequired:true,
-            choices:["Very Good","Good","OK","Bad", "Very Bad"], colCount:5
+            choices:["Upset","Tired","So-So","OK", "Peachy"], colCount:5
         },{
             type:"radiogroup",
             name:"How was Class?",

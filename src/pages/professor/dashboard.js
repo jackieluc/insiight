@@ -3,6 +3,7 @@ import '../../styles/index.scss';
 import { initRoleSelection, bindRoleSelection } from '../../utils/role-modal';
 import { getAllCourses, bindAddCourseButton } from '../../utils/course-utils';
 import { addSurvey } from '../../utils/survey-utils';
+import { getComments } from '../../utils/discussion-utils';
 
 // Redirect the user to the home page if not logged in
 $(window).on('load', () => {
@@ -27,14 +28,12 @@ initRoleSelection();
 netlifyIdentity.on('login', () => {
   // get all courses on load or refresh
   // pass in survey options to dynamically bind to button selections in the course list
-  getAllCourses(addSurvey);
+  getAllCourses(addSurvey, null, getComments);
   
   const role = localStorage.getItem('role');
 
   // Change the navigation menu URL to include the role
   $('nav .dashboard-link .nav-link').attr('href', `/${role}/dashboard`);
-  
-  $('.survey').css('width', '80%'); 
 });
 
 // Clear the role on logout and redirect to home page
@@ -50,5 +49,5 @@ $('document').ready(function() {
 
   // Bind on-click handler for adding a course
   // pass in survey options to dynamically bind to button selections in the course list
-  bindAddCourseButton(addSurvey);
+  bindAddCourseButton(addSurvey, null, getComments);
 });

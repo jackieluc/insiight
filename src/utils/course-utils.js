@@ -96,7 +96,11 @@ function bindStudentSurvey(surveyFunction, surveyInfo) {
   });
 };
 
-function bindCourseSelection(surveyFunction) {
+function showDiscussionThread() {
+  $('.discussion-thread').css('display', 'flex');
+};
+
+function bindCourseSelection(surveyFunction, submitComment, getComments) {
   $('.courses .course-info').on('click', function(event) {
     const role = localStorage.getItem('role');
 
@@ -104,6 +108,11 @@ function bindCourseSelection(surveyFunction) {
     const courseName = course.find('[data-course]').data('course');
     const professor = course.find('[data-professor]').data('professor');
     const joinCode = course.find('[data-code]').data('code');
+
+    const courseInfo = {
+      courseName: courseName,
+      joinCode: joinCode
+    };
 
     const surveyInfo = {
       courseName: courseName,
@@ -120,14 +129,20 @@ function bindCourseSelection(surveyFunction) {
       surveySelectElement.empty();
       
       bindProfessorSurvey(surveySelectElement, surveyFunction, surveyInfo);
+      showDiscussionThread();
+      getComments(courseInfo);
     }
     else if (role === 'student') {
+
       bindStudentSurvey(surveyFunction, surveyInfo);
+      showDiscussionThread();
+      submitComment(courseInfo);
+      getComments(courseInfo);
     }
   }); 
 }
 
-function getAllCourses(surveyFunction) {
+function getAllCourses(surveyFunction, submitComment, getComments) {
   const user = netlifyIdentity.currentUser();
 
   fetch('/.netlify/functions/get-courses', {
@@ -148,7 +163,7 @@ function getAllCourses(surveyFunction) {
         courses.map(course => addCourseToSideBar(course));
 
         // Bind on-click handler for when a user selects a course in the sidebar
-        bindCourseSelection(surveyFunction);
+        bindCourseSelection(surveyFunction, submitComment, getComments);
       };
     });
   })
@@ -156,7 +171,7 @@ function getAllCourses(surveyFunction) {
 };
 
 // Takes the information from the form and submits it to add-course Netlify function
-function bindAddCourseButton(surveyFunction) {
+function bindAddCourseButton(surveyFunction, submitComment, getComments) {
   $('.add-course-button').on('click', function() {
     const user = netlifyIdentity.currentUser();
     const role = localStorage.getItem('role');
@@ -210,7 +225,7 @@ function bindAddCourseButton(surveyFunction) {
         else {
           addCourseToSideBar(course);
           // Bind on-click handler for when a user selects a course in the sidebar
-          bindCourseSelection(surveyFunction);
+          bindCourseSelection(surveyFunction, submitComment, getComments);
 
           $('#add-course-modal').modal('hide');
         }

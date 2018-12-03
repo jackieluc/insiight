@@ -71,9 +71,9 @@ function getComments(courseInfo) {
 
     response.text().then(function(result) {
       const { discussionID, comments } = JSON.parse(result);
+      $('.discussion-thread .thread').empty();
 
       if (comments) {
-        $('.discussion-thread .thread').empty();
         comments.map(comment => addToDiscussionThread(comment));
 
         // Only students can upvote

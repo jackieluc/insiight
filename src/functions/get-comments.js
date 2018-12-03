@@ -46,22 +46,24 @@ exports.handler = function(event, context, callback) {
         connection.close();
         successResponse(callback, { response: null });
       }
-      
-      console.log('Found comments in discussion thread.');
-
-      const { discussionID, comments } = discussionThread;
-
-      const sortedComments = comments.sort(function(a, b) {
-        return b.upvotes - a.upvotes;
-      });
-
-      const response = {
-        discussionID: discussionID,
-        comments: sortedComments
+      else {
+        console.log('Found comments in discussion thread.');
+        
+  
+        const { discussionID, comments } = discussionThread;
+  
+        const sortedComments = comments.sort(function(a, b) {
+          return b.upvotes - a.upvotes;
+        });
+  
+        const response = {
+          discussionID: discussionID,
+          comments: sortedComments
+        };
+  
+        connection.close();
+        successResponse(callback, response);
       };
-
-      connection.close();
-      successResponse(callback, response);
     });
   });
 }

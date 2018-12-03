@@ -24,12 +24,8 @@ function successResponse(callback, res) {
 
 exports.handler = function(event, context, callback) {
   console.log('START: Received request.');
-
   
-  //const payload = JSON.parse();
-  const joinCode = JSON.parse(event.body);
-  
-  console.log(joinCode);
+  const { joinCode } = JSON.parse(event.body);
 
   MongoClient.connect(DB_URL, { useNewUrlParser: true }, function(err, connection) {
     if (err) return errorResponse(callback, err);
@@ -39,13 +35,14 @@ exports.handler = function(event, context, callback) {
     const db = connection.db(insiightDb);
     const surveys = db.collection('surveys');
     
-    
     surveys.findOne( { joinCode } , function(err, survey) {
       if (err) return errorResponse(callback, err);
-        let temp = JSON.stringify(survey.schema);
-        var result = temp.match(/[+-]?\d+(?:\.\d+)?/g).map(Number);
+
+      let temp = JSON.stringify(survey.schema);
+      const result = temp.match(/[+-]?\d+(?:\.\d+)?/g).map(Number);
         
       console.log(result[0]);
+      
       connection.close();
       successResponse(callback, { result });   
     });

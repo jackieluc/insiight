@@ -72,6 +72,7 @@ function getComments(courseInfo) {
     response.text().then(function(result) {
       const { discussionID, comments } = JSON.parse(result);
       $('.discussion-thread .thread').empty();
+      $('.survey-container').empty();
 
       if (comments) {
         comments.map(comment => addToDiscussionThread(comment));

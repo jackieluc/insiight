@@ -80,12 +80,9 @@ function bindProfessorSurvey(surveySelectElement, surveyFunction, surveyInfo) {
   });
 
   $('.results-cta').on('click', function(event) {
-    getResults();
+    getResults(joinCode);
     //getResults().then(function(myJson) {console.log(JSON.stringify(myJson))});
-    //console.log(test);
 
-    //$('.survey-card').empty();
-    $('.survey-container').empty();
     $('.survey-container').append(`
       <div id="question-containers">
         <div class="qcontainer" >
@@ -360,16 +357,11 @@ function getAllCourses(surveyFunction, submitComment, getComments) {
   .catch(err => console.error(err));
 };
 
-function getResults() {
-
-  const role = localStorage.getItem('role');
-
-  const course = $(event.target).closest('.course-info');
-  console.log(course);
+function getResults(joinCode) {
 
   fetch('/.netlify/functions/get-results', {
     method: "POST",
-    body: '1172'
+    body: JSON.stringify({ joinCode: joinCode })
   })
   .then(response => {
     if (!response.ok) {
